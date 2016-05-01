@@ -60,3 +60,15 @@ public class HelloWebXml extends SpringBootServletInitializer {
 </dependency>
 在这里将scope属性设置为provided，这样在最终形成的WAR中不会包含这个JAR包，因为Tomcat或Jetty等服务器在运行时将会提供相关的API类。
 此时，执行mvn package命令就会得到一个WAR文件，我们可以直接将其放到Tomcat下运行。
+
+参考资料
+
+http://projects.spring.io/spring-boot/
+
+http://projects.spring.io/spring-boot/docs/README.html
+
+http://spring.io/guides/gs/spring-boot/
+
+http://spring.io/guides/gs/actuator-service/
+
+http://spring.io/guides/gs/convert-jar-to-war/
