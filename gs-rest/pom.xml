@@ -5,7 +5,7 @@
     <groupId>com.tom</groupId>
     <artifactId>gs-rest</artifactId>
     <version>0.1.0</version>
-<packaging>war</packaging>
+    <packaging>war</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -27,7 +27,7 @@
             </exclusions>
 
         </dependency>
-       <dependency>
+        <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
             <version>8.0.3</version>
