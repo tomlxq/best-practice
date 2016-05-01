@@ -12,6 +12,7 @@
         <module>gs-rest</module>
         <module>gs-jpa</module>
         <module>gs-bookmark</module>
+        <module>gs-zero-mvc</module>
     </modules>
 
 </project>
