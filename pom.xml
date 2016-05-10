@@ -9,10 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>gs-rest</module>
-        <module>gs-jpa</module>
-        <module>gs-bookmark</module>
+
         <module>gs-zero-mvc</module>
+        <module>gs-spring-security-angular-js</module>
     </modules>
 
 </project>

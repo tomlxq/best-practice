@@ -1,6 +1,0 @@
-定义一个实体类
-`src/main/java/com.tom.entity/Customer.java`
-[source,java]
-----
-include::src/main/java/com/tom/entityCustomer.java[]
-----
