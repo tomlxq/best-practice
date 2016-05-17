@@ -1,0 +1,15 @@
+# best-practice
+test spring cases
+
+---
+tags: [spring,mybatis,angular,rest,oauth]
+projects: [gs-zero-mvc]
+---
+
+:toc: left
+:icons: font
+:source-highlighter: prettify
+:image-width: 500
+
+# Spring Security and Angular JS
+
