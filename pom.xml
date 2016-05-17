@@ -11,7 +11,7 @@
     <modules>
 
         <module>gs-zero-mvc</module>
-        <module>gs-spring-security-angular-js</module>
+
     </modules>
 
 </project>
