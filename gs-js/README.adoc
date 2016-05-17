@@ -1,0 +1,46 @@
+=== Java Spring Boot: How to map my app root ("/") to index.html
+[source,java]
+----
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+@Configuration
+public class MyWebMvcConfig {
+
+    @Bean
+    public WebMvcConfigurerAdapter forwardToIndex() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addViewControllers(ViewControllerRegistry registry) {
+                // forward requests to /admin and /user to their index.html
+                registry.addViewController("/admin").setViewName(
+                        "forward:/admin/index.html");
+                registry.addViewController("/user").setViewName(
+                        "forward:/user/index.html");
+            }
+        };
+    }
+
+}
+-----
+
+=== 如何找到模板首页
+
+[source,java]
+----
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+@Configuration
+@EnableWebMvc//可以不用写
+public class WebMvcConfig extends WebMvcConfigurerAdapter{
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("index");//创建resources/templates/index.ftl
+    }
+}
+----
