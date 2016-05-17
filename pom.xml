@@ -4,14 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>best-practice</groupId>
-    <artifactId>com.tom</artifactId>
+    <groupId>com.tom</groupId>
+    <artifactId>best-practice</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-
         <module>gs-zero-mvc</module>
-        <module>gs-spring-security-angular-js</module>
+        <module>gs-jdbc</module>
     </modules>
 
 </project>
