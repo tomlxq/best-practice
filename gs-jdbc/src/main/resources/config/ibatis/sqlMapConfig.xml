@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+        "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+        <!--
+        config文件主要用来定义数据源的
+        properties(主要定义属性文件)
+        settings(用来做一些自定义的配置)
+        typealias(用来设别名，默认的有JDBC,JTA,EXTERNAL,SIMPLE,DBCP,JNDI)
+        transcationManager(用来定义事务管理)
+        datasource(用来配置数据源，2.0以后只允许一个数据源)
+        sqlMap(用来做其他sqlmp文件的引用)-->
+<sqlMapConfig>
+    <settings
+            cacheModelsEnabled="true"
+            enhancementEnabled="true"
+            maxSessions="64"
+            maxTransactions="8"
+            maxRequests="128"/>
+    <sqlMap resource="config/ibatis/AccountSQL.xml"/>
+</sqlMapConfig>
+
