@@ -1,0 +1,95 @@
+////
+https://github.com/spring-guides
+
+////
+|===
+|内连接 （INNER JOIN）|利用内连接可获取两表的公共部分的记录，公共部分记录集C
+隐式的内连接，没有INNER JOIN，形成的中间表为两个表的笛卡尔积
+显示的内连接，一般称为内连接，有INNER JOIN，形成的中间表为两个表经过ON条件过滤后的笛卡尔积。
+|实例－显示的内连接| SELECT * FROM accounts a INNER JOIN department b on a.id=b.user_id;
+|实例－隐式的内连接|SELECT * FROM accounts a , department b WHERE a.id=b.user_id;
+|外连接－左连接（Left JOIN）|公共部分记录集C＋表A记录集A1。
+|左外连接（LEFT OUTER JOIN） | SELECT * FROM accounts a Left JOIN department b on a.id=b.user_id;
+|左外连接（LEFT OUTER JOIN） |  SELECT * FROM accounts a LEFT OUTER JOIN department b ON a.id=b.user_id;
+|外连接－右连接（Right JOIN）|公共部分记录集C＋表B记录集B1。
+|实例| SELECT * FROM accounts a Right JOIN department b on a.id=b.user_id;
+|右外连接（RIGHT OUTER JOIN）|SELECT * FROM accounts a RIGHT OUTER JOIN department b ON a.id=b.user_id;
+｜全外连接（FULL OUTER JOIN）  ｜FULL  JOIN 或 FULL OUTER JOIN
+|全外连接|SELECT * FROM accounts a full join department b on a.id=b.user_id; (mysql不支持)
+ |全外连接-左外和右外的合集|SELECT * FROM accounts a LEFT OUTER JOIN department b ON a.id=b.user_id
+ UNION
+ SELECT * FROM accounts a RIGHT OUTER JOIN department b ON a.id=b.user_id;
+｜交叉连接（CROSS JOIN）｜交叉连接（CROSS JOIN）：有两种，显式的和隐式的，不带ON子句，返回的是两表的乘积，也叫笛卡尔积
+|实例-显式|SELECT * FROM accounts a CROSS JOIN department b WHERE a.id=b.user_id;
+|实例-隐式|SELECT * FROM accounts a , department b WHERE a.id=b.user_id;
+|===
+
+> 注意：MySQL是不支持全外的连接的，这里给出的写法适合Oracle和DB2。但是可以通过左外和右外求合集来获取全外连接的查询结果
+
+* **内联接**（典型的联接运算，使用像 =  或 <> 之类的比较运算符）。包括相等联接和自然联接。
+  内联接使用比较运算符根据每个表共有的列的值匹配两个表中的行
+  内连接（INNER JOIN）：有两种，显式的和隐式的，返回连接表中符合连接条件和查询条件的数据行。
+* **外联接** 外联接可以是左向外联接、右向外联接或完整外部联接。
+外连接（OUTER JOIN）：外连不但返回符合连接和查询条件的数据行，还返回不符合条件的一些行。外连接分三类：左外连接（LEFT OUTER JOIN）、右外连接（RIGHT OUTER JOIN）和全外连接（FULL OUTER JOIN）。
+三者的共同点是都返回符合连接条件和查询条件（即：内连接）的数据行。不同点如下：
+左外连接还返回左表中不符合连接条件单符合查询条件的数据行。
+右外连接还返回右表中不符合连接条件单符合查询条件的数据行。
+全外连接还返回左表中不符合连接条件单符合查询条件的数据行，并且还返回右表中不符合连接条件单符合查询条件的数据行。全外连接实际是上左外连接和右外连接的数学合集（去掉重复），即“全外=左外 UNION 右外”。
+说明：左表就是在“（LEFT OUTER JOIN）”关键字左边的表。右表当然就是右边的了。在三种类型的外连接中，OUTER 关键字是可省略的。
+
+在 FROM子句中指定外联接时，可以由下列几组关键字中的一组指定：
+
+>  LEFT  JOIN或LEFT OUTER JOIN
+左向外联接的结果集包括  LEFT OUTER子句中指定的左表的所有行，而不仅仅是联接列所匹配的行。如果左表的某行在右表中没有匹配行，则在相关联的结果集行中右表的所有选择列表列均为空值。
+
+>  RIGHT  JOIN 或 RIGHT  OUTER  JOIN
+右向外联接是左向外联接的反向联接。将返回右表的所有行。如果右表的某行在左表中没有匹配行，则将为左表返回空值。
+
+>  FULL  JOIN 或 FULL OUTER JOIN
+完整外部联接返回左表和右表中的所有行。当某行在另一个表中没有匹配行时，则另一个表的选择列表列包含空值。如果表之间有匹配行，则整个结果集行包含基表的数据值。
+
+* **交叉联接**
+交叉联接返回左表中的所有行，左表中的每一行与右表中的所有行组合。交叉联接也称作笛卡尔积。
+FROM 子句中的表或视图可通过内联接或完整外部联接按任意顺序指定；但是，用左或右向外联接指定表或视图时，表或视图的顺序很重要。
+
+* **联合连接（UNION JOIN）**
+这是一种很少见的连接方式。
+Oracle、MySQL均不支持，其作用是：找出全外连接和内连接之间差异的所有行。这在数据分析中排错中比较常用。也可以利用数据库的集合操作来实现此功能。
+
+>  联合查询（UNION JOIN）例句，还没有找到能执行的SQL环境
+SELECT * FROM accounts a UNION JOIN department b ON a.id=b.user_id;
+
+* **自然连接（NATURAL INNER JOIN）**
+
+>  说真的，这种连接查询没有存在的价值，既然是SQL2标准中定义的，就给出个例子看看吧。自然连接无需指定连接列，SQL会检查两个表中是否相同名称的列，且假设他们在连接条件中使用，并且在连接条件中仅包含一个连接列。不允许使用ON语句，不允许指定显示列，显示列只能用*表示（ORACLE环境下测试的）。对于每种连接类型（除了交叉连接外），均可指定NATURAL。
+
+* **SQL查询的基本原理：两种情况介绍**
+
+>  单表查询：根据WHERE条件过滤表中的记录，形成中间表（这个中间表对用户是不可见的）；然后根据SELECT的选择列选择相应的列进行返回最终结果。
+
+>  两表连接查询：对两表求积（笛卡尔积）并用ON条件和连接连接类型进行过滤形成中间表；然后根据WHERE条件过滤中间表的记录，并根据SELECT指定的列返回查询结果。
+
+>  多表连接查询：先对第一个和第二个表按照两表连接做查询，然后用查询结果和第三个表做连接查询，以此类推，直到所有的表都连接上为止，最终形成一个中间的结果表，然后根据WHERE条件过滤中间表的记录，并根据SELECT指定的列返回查询结果。
+理解SQL查询的过程是进行SQL优化的理论依据。
+
+* **ON后面的条件（ON条件）和WHERE条件的区别： **
+ON条件：是过滤两个链接表笛卡尔积形成中间表的约束条件。
+WHERE条件：在有ON条件的SELECT语句中是过滤中间表的约束条件。在没有ON的单表查询中，是限制物理表或者中间查询结果返回记录的约束。在两表或多表连接中是限制连接形成最终中间表的返回结果的约束。
+从这里可以看出，将WHERE条件移入ON后面是不恰当的。推荐的做法是：
+ON只进行连接操作，WHERE只过滤中间表的记录。
+
+连接查询是SQL查询的核心，连接查询的连接类型选择依据实际需求。如果选择不当，非但不能提高查询效率，反而会带来一些逻辑错误或者性能低下。下面总结一下两表连接查询选择方式的依据：
+
+1. 查两表关联列相等的数据用内连接。
+2. Col_L是Col_R的子集时用右外连接。
+3. Col_R是Col_L的子集时用左外连接。
+4. Col_R和Col_L彼此有交集但彼此互不为子集时候用全外。
+5. 求差操作的时候用联合查询。
+
+多个表查询的时候，这些不同的连接类型可以写到一块。例如：
+select a.name,b.role_name,c.name from accounts a
+INNER JOIN roles b on a.id=b.user_id
+left outer join department c on a.id=b.user_id where a.email!="admin@gmail.com";
+
+
+
