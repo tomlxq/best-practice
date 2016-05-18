@@ -20,22 +20,22 @@
     <typeAlias alias="account" type="com.example.entities.Account"/>
     <insert id="insertAccount" parameterClass="account">
         insert into
-        account(name,password,email,sex,birthday)
+        accounts(name,password,email,sex,birthday)
         values(#name#,#password#,#email#,#sex#,#birthday#)
         <selectKey resultClass="java.lang.Long" keyProperty="id">
             select last_insert_id()
         </selectKey>
     </insert>
     <delete id="deleteAccount" parameterClass="account">
-    delete from account where id=#id#
+    delete from accounts where id=#id#
 </delete>
     <update id="updateAccount" parameterClass="account">
-        update account set name=#name#,password=#password#,email=#email#,sex=#sex#,
+        update accounts set name=#name#,password=#password#,email=#email#,sex=#sex#,
         birthday=#birthday#
         where id=#id#
     </update>
     <select id="queryOneAccount" resultClass="account" parameterClass="account">
-        select * from account
+        select * from accounts
         <dynamic prepend="where">
             <isNotEmpty prepend="and" property="id">
                 (id=#id#)
@@ -50,7 +50,7 @@
         limit 1
     </select>
     <select id="queryAllAccount" resultClass="account">
-        SELECT * FROM account
+        SELECT * FROM accounts
         <dynamic prepend="where">
 
                 <isNotEmpty prepend="and" property="account.id">

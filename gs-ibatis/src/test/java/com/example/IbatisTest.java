@@ -1,14 +1,10 @@
 package com.example;
 
-import com.example.ibatis.AccountDao;
 import com.example.entities.Account;
-import com.example.ibatis.AccountDaoImpl;
+import com.example.ibatis.AccountDao;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
-import javax.annotation.Resources;
-import java.io.Reader;
 import java.util.Date;
 
 /**

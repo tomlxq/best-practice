@@ -11,7 +11,7 @@
     <modules>
         <module>gs-zero-mvc</module>
         <module>gs-js</module>
-        <module>gs-jdbc</module>
+        <module>gs-ibatis</module>
         <module>gs-mybatis</module>
     </modules>
 
