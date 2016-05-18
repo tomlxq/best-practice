@@ -1,0 +1,106 @@
+////
+https://github.com/zhangkaitao/spring4-showcase/tree/master/spring-mvc-test
+https://github.com/sivaprasadreddy/sivalabs-blog-samples-code/blob/master/jpa-demo/pom.xml
+SpringMVC4零配置
+http://hanqunfeng.iteye.com/blog/2113820
+////
+
+=== spring常用注解
+
+1. @Controller
+
+Controller控制器是通过服务接口定义的提供访问应用程序的一种行为，它解释用户的输入，将其转换成一个模型然后将试图呈献给用户。Spring MVC 使用 @Controller 定义控制器，它还允许自动检测定义在类路径下的组件并自动注册。如想自动检测生效，需在XML头文件下引入 spring-context:
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:component-scan base-package="com.example.com.web"/>
+</beans>
+----
+
+2. @RequestMapping
+
+我们可以 @RequestMapping 注解将类似 “/favsoft”这样的URL映射到整个类或特定的处理方法上。一般来说，类级别的注解映射特定的请求路径到表单控制器上，而方法级别的注解只是映射为一个特定的HTTP方法请求（“GET”，“POST”等）或HTTP请求参数。
+
+[source,java]
+----
+@Controller
+@RequestMapping("/favsoft")
+public class AnnotationController {
+
+    @RequestMapping(method=RequestMethod.GET)
+    public String get(){
+        return "";
+    }
+
+    @RequestMapping(value="/getName", method = RequestMethod.GET)
+    public String getName(String userName) {
+        return userName;
+    }
+
+    @RequestMapping(value="/{day}", method=RequestMethod.GET)
+    public String getDay(Date day){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(day);
+    }
+
+    @RequestMapping(value="/addUser", method=RequestMethod.GET)
+    public String addFavUser(@Validated FavUser favUser,BindingResult result){
+        if(result.hasErrors()){
+            return "favUser";
+        }
+        //favUserService.addFavUser(favUser);
+        return "redirect:/favlist";
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test(){
+        return "aa";
+    }
+
+}
+----
+
+@RequestMapping 既可以作用在类级别，也可以作用在方法级别。当它定义在类级别时，标明该控制器处理所有的请求都被映射到 /favsoft 路径下。@RequestMapping中可以使用 method 属性标记其所接受的方法类型，如果不指定方法类型的话，可以使用 HTTP GET/POST 方法请求数据，但是一旦指定方法类型，就只能使用该类型获取数据。
+@RequestMapping 可以使用 @Validated与BindingResult联合验证输入的参数，在验证通过和失败的情况下，分别返回不同的视图。
+@RequestMapping支持使用URI模板访问URL。URI模板像是URL模样的字符串，由一个或多个变量名字组成，当这些变量有值的时候，它就变成了URI。
+
+3. @PathVariable
+
+在Spring MVC中，可以使用 @PathVariable 注解方法参数并将其绑定到URI模板变量的值上
+
+4. @RequestParam
+
+@RequestParam将请求的参数绑定到方法中的参数上，如下面的代码所示。其实，即使不配置该参数，注解也会默认使用该参数
+
+5. @RequestBody
+
+@RequestBody是指方法参数应该被绑定到HTTP请求Body上。
+
+6. @ResponseBody
+
+@ResponseBody与@RequestBody类似，它的作用是将返回类型直接输入到HTTP response body中。@ResponseBody在输出JSON格式的数据时
+
+7. @RestController
+
+我们经常见到一些控制器实现了REST的API，只为服务于JSON，XML或其它自定义的类型内容，@RestController用来创建REST类型的控制器，与@Controller类型。@RestController就是这样一种类型，它避免了你重复的写@RequestMapping与@ResponseBody。
+
+8. HttpEntity
+
+HttpEntity除了能获得request请求和response响应之外，它还能访问请求和响应头
+
+9. @ModelAttribute
+
+@ModelAttribute可以作用在方法或方法参数上，当它作用在方法上时，标明该方法的目的是添加一个或多个模型属性（model attributes）。该方法支持与@RequestMapping一样的参数类型，但并不能直接映射成请求。控制器中的@ModelAttribute方法会在@RequestMapping方法调用之前而调用
+@ModelAttribute作用在方法参数上
+当@ModelAttribute作用在方法参数上时，表明该参数可以在方法模型中检索到。如果该参数不在当前模型中，该参数先被实例化然后添加到模型中。一旦模型中有了该参数，该参数的字段应该填充所有请求参数匹配的名称中。这是Spring MVC中重要的数据绑定机制，它省去了单独解析每个表单字段的时间。
+@ModelAttribute是一种很常见的从数据库中检索属性的方法，它通过@SessionAttributes使用request请求存储。在一些情况下，可以很方便的通过URI模板变量和类型转换器检索属性。
