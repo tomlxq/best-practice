@@ -1,0 +1,80 @@
+:toc:
+:icons: font
+:source-highlighter: prettify
+:image-width: 500
+:base-root: .
+=== 主要介绍spring mvc控制框架的流程及原理
+
+image::../{base-root}/doc/spring_framework.png[spring框架图, link="../{base-root}/doc/spring_framework.png"]
+
+# Spring 面向方面编程（AOP）和控制反转 （IOC） 容器
+* 控制反转 (Inversion of Control)，英文缩写IoC
+
+应用控制反转，对象在被创建的时候，由一个调控系统内所有对象的外界实体将其所依赖的对象的引用传递给它。
+也可以说，依赖被注入到对象中。所以，控制反转是，关于一个对象如何获取他所依赖的对象的引用，这个责任的反转。
+
+控制反转主要有两方面：
+
+    > 依赖注入 (Dependency Injection)，缩写为DI
+    > 依赖查找 (Dependency Lookup)
+
+其中，依赖注入应用较为广泛。
+依赖注入是一种技术，它是指组件不做定位查询，只提供普通的Java方法让容器去决定依赖关系。
+容器全权负责的组件的装配，它会把符合依赖关系的对象通过JavaBean属性或者构造函数传递给需要的对象。
+
+通过JavaBean属性注射依赖关系的做法称为设值方法注入(Setter Injection)；将依赖关系作为构造函数参数传入的做法称为构造器注入（Constructor Injection）。
+
+
+* 面向切面编程 (Aspect Oriented Programming)，缩写为AOP
+
+通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。
+利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。
+
+# 主要模块介绍
+
+**核心容器**
+核心容器提供 Spring 框架的基本功能。核心容器的主要组件是 BeanFactory，它是工厂模式的实现。BeanFactory 使用控制反转 （IOC） 模式将应用程序的配置和依赖性规范与实际的应用程序代码分开。
+
+**Spring 上下文**
+Spring 上下文是一个配置文件，向 Spring 框架提供上下文信息。Spring 上下文包括企业服务，例如 JNDI、EJB、电子邮件、国际化、校验和调度功能。
+
+**Spring AOP**
+通过配置管理特性，Spring AOP 模块直接将面向方面的编程功能集成到了 Spring 框架中。所以，可以很容易地使 Spring 框架管理的任何对象支持 AOP。Spring AOP 模块为基于 Spring 的应用程序中的对象提供了事务管理服务。通过使用 Spring AOP，不用依赖 EJB 组件，就可以将声明性事务管理集成到应用程序中。
+
+**Spring DAO**
+JDBC DAO 抽象层提供了有意义的异常层次结构，可用该结构来管理异常处理和不同数据库供应商抛出的错误消息。异常层次结构简化了错误处理，并且极大地降低了需要编写的异常代码数量（例如打开和关闭连接）。Spring DAO 的面向 JDBC 的异常遵从通用的 DAO 异常层次结构。
+
+**Spring ORM**
+Spring 框架插入了若干个 ORM 框架，从而提供了 ORM 的对象关系工具，其中包括 JDO、Hibernate 和 iBatis SQL Map。所有这些都遵从 Spring 的通用事务和 DAO 异常层次结构。
+
+**Spring Web 模块**
+Web 上下文模块建立在应用程序上下文模块之上，为基于 Web 的应用程序提供了上下文。所以，Spring 框架支持与 Jakarta Struts 的集成。Web 模块还简化了处理多部分请求以及将请求参数绑定到域对象的工作。
+
+**Spring MVC 框架**
+MVC 框架是一个全功能的构建 Web 应用程序的 MVC 实现。通过策略接口，MVC 框架变成为高度可配置的，MVC 容纳了大量视图技术，其中包括 JSP、Velocity、Tiles、iText 和 POI。
+
+Spring 框架的功能可以用在任何 J2EE 服务器中，大多数功能也适用于不受管理的环境。Spring 的核心要点是：支持不绑定到特定 J2EE 服务的可重用业务和数据访问对象。毫无疑问，这样的对象可以在不同 J2EE 环境 （Web 或 EJB）、独立应用程序、测试环境之间重用。
+
+# SpringMVC工作流程描述
+
+1. 向服务器发送HTTP请求，请求被前端控制器 DispatcherServlet 捕获。
+2. DispatcherServlet 根据 <servlet-name>-servlet.xml 中的配置对请求的URL进行解析，得到请求资源标识符（URI）。
+   然后根据该URI，调用 HandlerMapping 获得该Handler配置的所有相关的对象（包括Handler对象以及Handler对象对应的拦截器），最后以 HandlerExecutionChain 对象的形式返回。
+3. DispatcherServlet 根据获得的Handler，选择一个合适的 HandlerAdapter。（附注：如果成功获得HandlerAdapter后，此时将开始执行拦截器的preHandler(...)方法）。
+4. 提取Request中的模型数据，填充Handler入参，开始执行Handler（Controller)。 在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：
+
+        HttpMessageConveter： 将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息。
+        数据转换：对请求消息进行数据转换。如String转换成Integer、Double等。
+        数据根式化：对请求消息进行数据格式化。 如将字符串转换成格式化数字或格式化日期等。
+        数据验证： 验证数据的有效性（长度、格式等），验证结果存储到BindingResult或Error中。
+
+5. Handler(Controller)执行完成后，向 DispatcherServlet 返回一个 ModelAndView 对象；
+6. 根据返回的ModelAndView，选择一个适合的 ViewResolver（必须是已经注册到Spring容器中的ViewResolver)返回给DispatcherServlet。
+7. ViewResolver 结合Model和View，来渲染视图。
+8. 视图负责将渲染结果返回给客户端。
+
+# Reference:
+* Spring 系列: Spring 框架简介 https://www.ibm.com/developerworks/cn/java/wa-spring1/
+
+
+
