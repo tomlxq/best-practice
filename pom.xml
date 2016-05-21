@@ -13,6 +13,7 @@
         <module>gs-js</module>
         <module>gs-ibatis</module>
         <module>gs-mybatis</module>
+        <module>gs-jdbc</module>
     </modules>
 
 </project>

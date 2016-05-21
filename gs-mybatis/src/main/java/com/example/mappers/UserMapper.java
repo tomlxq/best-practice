@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Created by tom on 2016/5/21.
  */
+
 public interface UserMapper
 {
 
