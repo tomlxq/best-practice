@@ -28,6 +28,9 @@ public class GsMybatisApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		findAllUsers();
+		findUserById();
+		createUser();
 	}
 
 	@Test

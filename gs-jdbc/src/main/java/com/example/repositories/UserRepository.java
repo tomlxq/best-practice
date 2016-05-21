@@ -17,17 +17,16 @@ import java.util.List;
  * Created by tom on 2016/5/21.
  */
 @Repository
-public class UserRepository
-{
+public class UserRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<User> findAll() {
         return jdbcTemplate.query("select * from users", new UserRowMapper());
     }
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public User findUserById(int id) {
         return jdbcTemplate.queryForObject("select * from users where id=?", new Object[]{id}, new UserRowMapper());
     }
@@ -53,10 +52,22 @@ public class UserRepository
         user.setId(newUserId);
         return user;
     }
+
+    public void delete(final Integer id) {
+        final String sql = "delete from users where id=?";
+        jdbcTemplate.update(sql,
+                new Object[]{id},
+                new int[]{java.sql.Types.INTEGER});
+    }
+
+    public void update(final User user) {
+        jdbcTemplate.update(
+                "update users set name=?,email=? where id=?",
+                new Object[]{user.getName(), user.getEmail(), user.getId()});
+    }
 }
 
-class UserRowMapper implements RowMapper<User>
-{
+class UserRowMapper implements RowMapper<User> {
 
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {

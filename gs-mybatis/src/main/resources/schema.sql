@@ -1,3 +1,5 @@
+Create DATABASE `gs-mybatis`;
+USE `gs-mybatis`;
 DROP TABLE IF EXISTS USERS;
 
 CREATE TABLE users (
