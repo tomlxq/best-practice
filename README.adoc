@@ -21,3 +21,5 @@ projects: [gs-zero-mvc]
 
 spring-boot是一个快速构建环境的一套框架，其设计理念是尽可能的减少xml的配置，用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。
 
+include::./springmvc-helloworld/README.adoc[]
+include::./springmvc-introduce/README.adoc[]

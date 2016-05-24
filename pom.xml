@@ -14,7 +14,7 @@
           <module>gs-ibatis</module>
           <module>gs-mybatis</module>
           <module>gs-jdbc</module>
-          <module>springmvc-instroduce</module>
+          <module>springmvc-introduce</module>
           <module>springmvc-helloworld</module>
           <module>parent</module>
 

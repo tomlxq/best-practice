@@ -1,5 +1,6 @@
 ////
 https://github.com/zhangkaitao/servlet3-showcase
+http://jinnianshilongnian.iteye.com/blog/1594806
 ////
 = spring mvc+freemarker
 
