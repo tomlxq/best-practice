@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MessageController {
     Logger logger = LoggerFactory.getLogger(MessageController.class);
 
-    @RequestMapping(value = "/message", method = RequestMethod.POST)
+    @RequestMapping(value = "/message", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody JSONObject message(@RequestParam String message) {
         logger.debug("{}", message);
         JSONObject item = new JSONObject();

@@ -23,6 +23,4 @@ public class HelloWorldController implements Controller {
         mv.setViewName("hello");
         return mv;
     }
-
-
 }

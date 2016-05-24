@@ -2,12 +2,12 @@
 https://github.com/zhangkaitao/servlet3-showcase
 http://jinnianshilongnian.iteye.com/blog/1594806
 ////
-= spring mvc+freemarker
+= spring mvc流程及常用的注解介绍
+> 本文采用maven搭建，框架为spring mvc+freemarker
+　使用一个简单的hello来说明spring mvc流程
 
-> 使用一个简单的hello来说明spring mvc流程
-
-== 运行步骤：
-1.  首先用户发送请求http://localhost:8080/springmvc-helloworld/hello——>web容器，web容器根据“/hello”路径映射到DispatcherServlet（url-pattern为/）进行处理；
+== spring mvc运行步骤：
+1.  首先用户发送请求http://localhost:8080/hello——>web容器，web容器根据“/hello”路径映射到DispatcherServlet（url-pattern为/）进行处理；
 2.  DispatcherServlet——>BeanNameUrlHandlerMapping进行请求到处理的映射，BeanNameUrlHandlerMapping将“/hello”路径直接映射到名字为“/hello”的Bean进行处理，即HelloWorldController，BeanNameUrlHandlerMapping将其包装为HandlerExecutionChain（只包括HelloWorldController处理器，没有拦截器）；
 3.  DispatcherServlet——> SimpleControllerHandlerAdapter，SimpleControllerHandlerAdapter将HandlerExecutionChain中的处理器（HelloWorldController）适配为SimpleControllerHandlerAdapter；
 4.  SimpleControllerHandlerAdapter——> HelloWorldController处理器功能处理方法的调用，SimpleControllerHandlerAdapter将会调用处理器的handleRequest方法进行功能处理，该处理方法返回一个ModelAndView给DispatcherServlet；
@@ -24,8 +24,76 @@ http://jinnianshilongnian.iteye.com/blog/1594806
 5.  处理器/页面控制器
 6.  视图
 
-== 支持返回json
-=== 配置方法1
+== web.xml配置
+[source,xml]
+----
+<servlet>
+    <servlet-name>helloworld</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:config/spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+    <servlet-name>helloworld</servlet-name>
+    <url-pattern>/</url-pattern>
+</servlet-mapping>
+----
+load-on-startup：表示启动容器时初始化该Servlet；
+url-pattern：表示哪些请求交给Spring Web MVC处理， “/” 是用来定义默认servlet映射的。也可以如“*.html”表示拦截所有以html为扩展名的请求。
+自此请求已交给Spring Web MVC框架处理，因此我们需要配置Spring的配置文件，默认DispatcherServlet会加载WEB-INF/[DispatcherServlet的Servlet名字]-servlet.xml配置文件。本示例为WEB-INF/helloworld-servlet.xml。
+
+=== 在Spring配置文件中配置HandlerMapping、HandlerAdapter
+
+`/src/main/resources/config/spring-mvc-by-manual.xml`
+[source,xml]
+----
+include::./src/main/resources/config/spring-mvc-by-manual.xml[]
+----
+BeanNameUrlHandlerMapping：表示将请求的URL和Bean名字映射，如URL为 “上下文/hello”，则Spring配置文件必须有一个名字为“/hello”的Bean，上下文默认忽略。
+SimpleControllerHandlerAdapter：表示所有实现了org.springframework.web.servlet.mvc.Controller接口的Bean可以作为Spring Web MVC中的处理器。如果需要其他类型的处理器可以通过实现HadlerAdapter来解决。
+
+=== 在Spring配置文件中配置ViewResolver
+====　支持JSP
+[source,xml]
+----
+<!-- 定义视图解析器 -->
+<bean id="viewResolver"
+      class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="classpath:/templates/"></property>
+    <property name="suffix" value=".jsp"></property>
+    <property name="order" value="1"/>
+</bean>
+----
+* InternalResourceViewResolver：用于支持Servlet、JSP视图解析；
+* viewClass：JstlView表示JSP模板页面需要使用JSTL标签库，classpath中必须包含jstl的相关jar包；
+* prefix和suffix：查找视图页面的前缀和后缀（前缀[逻辑视图名]后缀），比如传进来的逻辑视图名为hello，则该该jsp视图页面应该存放在“classpath:/templates/hello.jsp”；
+
+====　支持Freemarker
+[source,xml]
+----
+<!-- 配置freeMarker的模板路径 -->
+<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+    <property name="templateLoaderPath" value="classpath:/templates/" />
+    <property name="defaultEncoding" value="UTF-8" />
+</bean>
+<!-- freemarker视图解析器 -->
+<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    <property name="suffix" value=".ftl" />
+    <property name="order" value="0"/>
+    <property name="contentType" value="text/html;charset=UTF-8" />
+    <!-- 此变量值为pageContext.request, 页面使用方法：rc.contextPath -->
+    <property name="requestContextAttribute" value="rc" />
+</bean>
+----
+> order决定视图的优先级，本例中首先查找classpath:/templates/xxx.ftl再试着找classpath:/templates/xxx.jsp
+
+
+
+====　支持返回json
+==== 配置方法1
 [source,xml]
 ----
 <dependency>
@@ -56,7 +124,7 @@ http://jinnianshilongnian.iteye.com/blog/1594806
     </mvc:message-converters>
 </mvc:annotation-driven>
 ----
-=== 配置方法2
+==== 配置方法2
 仅有以下配置有乱码
 [source,xml]
 ----
@@ -92,3 +160,125 @@ http://jinnianshilongnian.iteye.com/blog/1594806
     <url-pattern>/*</url-pattern>
 </filter-mapping>
 ----
+==== 配置方法3,@RestController注解,自动转化json对象
+[source,java]
+----
+@RestController
+public class MessageController {
+    Logger logger = LoggerFactory.getLogger(MessageController.class);
+    @RequestMapping(value = "/message", method = RequestMethod.POST)
+    public @ResponseBody JSONObject message(@RequestParam String message) {
+        logger.debug("{}", message);
+        JSONObject item = new JSONObject();
+        item.put("name", "我是tomLuo");
+        return item;
+    }
+}
+----
+==== 配置方法4,produces="application/json"
+[source,java]
+----
+@Controller
+public class MessageController {
+    Logger logger = LoggerFactory.getLogger(MessageController.class);
+
+    @RequestMapping(value = "/message", method = RequestMethod.POST,produces="application/json") # <1>
+    public @ResponseBody JSONObject message(@RequestParam String message) {
+        logger.debug("{}", message);
+        JSONObject item = new JSONObject();
+        item.put("name", "我是tomLuo");
+        return item;
+    }
+}
+----
+<1> 见下面 Spring3.1新特性
+=== 开发处理器/页面控制器
+
+`/src/main/java/com/tom/web/controller/HelloWorldController.java`
+[source,java]
+----
+include::./src/main/java/com/tom/web/controller/HelloWorldController.java[]
+----
+
+* org.springframework.web.servlet.mvc.Controller：页面控制器/处理器必须实现Controller接口，注意别选错了；后边我们会学习其他的处理器实现方式；
+* public ModelAndView handleRequest(HttpServletRequest req, HttpServletResponse resp) ：功能处理方法，实现相应的功能处理，比如收集参数、验证参数、绑定参数到命令对象、将命令对象传入业务对象进行业务处理、最后返回ModelAndView对象；
+* ModelAndView：包含了视图要实现的模型数据和逻辑视图名；“mv.addObject("message", "Hello World!");
+* "Hello World!"表示添加模型数据，此处可以是任意POJO对象；“mv.setViewName("hello");”表示设置逻辑视图名为“hello”，视图解析器会将其解析为具体的视图，如前边的视图解析器InternalResourceVi。wResolver会将其解析为“classpath:/templates/hello.ftl”。
+* name="/hello"：前边配置的BeanNameUrlHandlerMapping，表示如过请求的URL为 “上下文/hello”，则将会交给该Bean进行处理。
+
+>
+以上Spring2.5之前，我们都是通过实现Controller接口或其实现来定义我们的处理器类
+
+== 注解式处理器支持
+=== Spring2.5: 注解式处理器
+Spring2.5引入注解式处理器支持，通过@Controller 和 @RequestMapping注解定义我们的处理器类
+
+需要通过处理器映射DefaultAnnotationHandlerMapping和处理器适配器AnnotationMethodHandlerAdapter来开启支持@Controller 和 @RequestMapping注解的处理器。
+
+* @Controller：用于标识是处理器类；
+* @RequestMapping：请求到处理器功能方法的映射规则；
+* @RequestParam：请求参数到处理器功能处理方法的方法参数上的绑定；
+* @ModelAttribute：请求参数到命令对象的绑定；
+* @SessionAttributes：用于声明session级别存储的属性，放置在处理器类上，通常列出模型属性（如@ModelAttribute）对应的名称，则这些属性会透明的保存到session中；
+* @InitBinder：自定义数据绑定注册支持，用于将请求参数转换到命令对象属性的对应类型；
+
+=== 开启注解
+[source,xml]
+----
+<context:component-scan base-package="com.tom.web.controller" use-default-filters="false">
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+</context:component-scan>
+<!-- 开启注解 -->
+<mvc:annotation-driven/>
+----
+> 只扫描com.tom.web.controller.*, 仅有@Controller的处理类
+
+=== Spring3.0: RESTful架构风格支持
+
+Spring3.0引入RESTful架构风格支持(通过@PathVariable注解和一些其他特性支持),且又引入了更多的注解支持：
+
+* @CookieValue：cookie数据到处理器功能处理方法的方法参数上的绑定；
+* @RequestHeader：请求头（header）数据到处理器功能处理方法的方法参数上的绑定；
+* @RequestBody：请求的body体的绑定（通过HttpMessageConverter进行类型转换）；
+* @ResponseBody：处理器功能处理方法的返回值作为响应体（通过HttpMessageConverter进行类型转换）；
+* @ResponseStatus：定义处理器功能处理方法/异常处理器返回的状态码和原因；
+* @ExceptionHandler：注解式声明异常处理器；
+* @PathVariable：请求URI中的模板变量部分到处理器功能处理方法的方法参数上的绑定，从而支持RESTful架构风格
+
+=== 其它支持
+
+* JSR-303验证框架的无缝支持（通过@Valid注解定义验证元数据）；
+* 使用Spring 3开始的ConversionService进行类型转换（PropertyEditor依然有效），支持使用@NumberFormat 和 @DateTimeFormat来进行数字和日期的格式化；
+* HttpMessageConverter（Http输入/输出转换器，比如JSON、XML等的数据输出转换器）；
+* ContentNegotiatingViewResolver，内容协商视图解析器，它还是视图解析器，只是它支持根据请求信息将同一模型数据以不同的视图方式展示（如json、xml、html等），RESTful架构风格中很重要的概念（同一资源，多种表现形式）；
+
+    Spring 3 引入 一个  mvc XML的命名空间用于支持mvc配置，包括如：
+      * <mvc:annotation-driven>：
+      自动注册基于注解风格的处理器需要的DefaultAnnotationHandlerMapping、AnnotationMethodHandlerAdapter
+      支持Spring3的ConversionService自动注册
+      支持JSR-303验证框架的自动探测并注册（只需把JSR-303实现放置到classpath）
+      自动注册相应的HttpMessageConverter（用于支持@RequestBody  和 @ResponseBody）（如XML输入输出转换器（只需将JAXP实现放置到classpath）、JSON输入输出转换器（只需将Jackson实现放置到classpath））等。
+    * <mvc:interceptors>：注册自定义的处理器拦截器；
+    * <mvc:view-controller>：和ParameterizableViewController类似，收到相应请求后直接选择相应的视图；
+    * <mvc:resources>：逻辑静态资源路径到物理静态资源路径的支持；
+    * <mvc:default-servlet-handler>：当在web.xml 中DispatcherServlet使用<url-pattern>/</url-pattern> 映射时，能映射静态资源（当Spring Web MVC框架没有处理请求对应的控制器时（如一些静态资源），转交给默认的Servlet来响应静态文件，否则报404找不到资源错误，）。
+
+=== Spring3.1新特性：
+*  对Servlet 3.0的全面支持。
+*  @EnableWebMvc：用于在基于Java类定义Bean配置中开启MVC支持，和XML中的<mvc:annotation-driven>功能一样；
+*  新的@Contoller和@RequestMapping注解支持类：处理器映射RequestMappingHandlerMapping 和 处理器适配器RequestMappingHandlerAdapter组合来代替Spring2.5开始的处理器映射DefaultAnnotationHandlerMapping和处理器适配器AnnotationMethodHandlerAdapter。
+*  新的@ExceptionHandler 注解支持类：ExceptionHandlerExceptionResolver来代替Spring3.0的AnnotationMethodHandlerExceptionResolver。
+* @RequestMapping的"consumes" 和 "produces" 条件支持：用于支持@RequestBody 和 @ResponseBody，
+    1. consumes指定请求的内容是什么类型的内容，即本处理方法消费什么类型的数据，如consumes="application/json"表示JSON类型的内容，Spring会根据相应的HttpMessageConverter进行请求内容区数据到@RequestBody注解的命令对象的转换；
+    2. produces指定生产什么类型的内容，如produces="application/json"表示JSON类型的内容，Spring的根据相应的HttpMessageConverter进行请求内容区数据到@RequestBody注解的命令对象的转换，Spring会根据相应的HttpMessageConverter进行模型数据（返回值）到JSON响应内容的转换
+
+* URI模板变量增强：URI模板变量可以直接绑定到@ModelAttribute指定的命令对象、@PathVariable方法参数在视图渲染之前被合并到模型数据中（除JSON序列化、XML混搭场景下）。
+* @Validated：JSR-303的javax.validation.Valid一种变体（非JSR-303规范定义的，而是Spring自定义的），用于提供对Spring的验证器（org.springframework.validation.Validator）支持，需要hibernate Validator 4.2及更高版本支持；
+* @RequestPart：提供对“multipart/form-data”请求的全面支持，支持Servlet 3.0文件上传（javax.servlet.http.Part）、支持内容的HttpMessageConverter（即根据请求头的Content-Type，来判断内容区数据是什么类型，如JSON、XML，能自动转换为命令对象），比@RequestParam更强大（只能对请求参数数据绑定，key-alue格式），而@RequestPart支持如JSON、XML内容区数据的绑定；
+* Flash 属性 和 RedirectAttribute：通过FlashMap存储一个请求的输出，当进入另一个请求时作为该请求的输入，典型场景如重定向
+    POST-REDIRECT-GET模式，
+    1. POST时将下一次需要的数据放在FlashMap；
+    2. 重定向；
+    3. 通过GET访问重定向的地址，此时FlashMap会把1放到FlashMap的数据取出放到请求中，并从FlashMap中删除；从而支持在两次请求之间保存数据并防止了重复表单提交）。
+* Spring Web MVC提供FlashMapManager用于管理FlashMap，默认使用SessionFlashMapManager，即数据默认存储在session中。
+
