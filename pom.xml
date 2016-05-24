@@ -8,13 +8,15 @@
     <artifactId>best-practice</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>gs-zero-mvc</module>
-        <module>gs-js</module>
-        <module>gs-ibatis</module>
-        <module>gs-mybatis</module>
-        <module>gs-jdbc</module>
-        <module>springmvc-instroduce</module>
-    </modules>
+      <modules>
+          <module>gs-zero-mvc</module>
+          <module>gs-js</module>
+          <module>gs-ibatis</module>
+          <module>gs-mybatis</module>
+          <module>gs-jdbc</module>
+          <module>springmvc-instroduce</module>
+          <module>springmvc-helloworld</module>
+          <module>parent</module>
 
+      </modules>
 </project>

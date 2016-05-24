@@ -1,0 +1,93 @@
+////
+https://github.com/zhangkaitao/servlet3-showcase
+////
+= spring mvc+freemarker
+
+> 使用一个简单的hello来说明spring mvc流程
+
+== 运行步骤：
+1.  首先用户发送请求http://localhost:8080/springmvc-helloworld/hello——>web容器，web容器根据“/hello”路径映射到DispatcherServlet（url-pattern为/）进行处理；
+2.  DispatcherServlet——>BeanNameUrlHandlerMapping进行请求到处理的映射，BeanNameUrlHandlerMapping将“/hello”路径直接映射到名字为“/hello”的Bean进行处理，即HelloWorldController，BeanNameUrlHandlerMapping将其包装为HandlerExecutionChain（只包括HelloWorldController处理器，没有拦截器）；
+3.  DispatcherServlet——> SimpleControllerHandlerAdapter，SimpleControllerHandlerAdapter将HandlerExecutionChain中的处理器（HelloWorldController）适配为SimpleControllerHandlerAdapter；
+4.  SimpleControllerHandlerAdapter——> HelloWorldController处理器功能处理方法的调用，SimpleControllerHandlerAdapter将会调用处理器的handleRequest方法进行功能处理，该处理方法返回一个ModelAndView给DispatcherServlet；
+5.  hello（ModelAndView的逻辑视图名）——>InternalResourceViewResolver， InternalResourceViewResolver使用FreeMarkerView，具体视图页面在classpath:/templates/hello.ftl；
+6.  FreeMarkerView（classpath:/templates/hello.ftl）——>渲染，将在处理器传入的模型数据(message=HelloWorld！)在视图中展示出来；
+7.  返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。
+
+到此HelloWorld就完成了，步骤是不是有点多？而且回忆下我们主要进行了如下配置：
+
+1.  前端控制器DispatcherServlet；
+2.  HandlerMapping
+3.  HandlerAdapter
+4.  ViewResolver
+5.  处理器/页面控制器
+6.  视图
+
+== 支持返回json
+=== 配置方法1
+[source,xml]
+----
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>fastjson</artifactId>
+    <version>1.2.12</version>
+</dependency>
+----
+[source,xml]
+----
+<mvc:annotation-driven>
+    <mvc:message-converters register-defaults="true">
+        <!-- 配置Fastjson支持 -->
+        <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+            <property name="supportedMediaTypes">
+                <list>
+                    <value>text/html;charset=UTF-8</value>
+                    <value>application/json</value>
+                </list>
+            </property>
+            <property name="features">
+                <list>
+                    <value>WriteMapNullValue</value>
+                    <value>QuoteFieldNames</value>
+                </list>
+            </property>
+        </bean>
+    </mvc:message-converters>
+</mvc:annotation-driven>
+----
+=== 配置方法2
+仅有以下配置有乱码
+[source,xml]
+----
+ <mvc:view-resolvers>
+        <mvc:content-negotiation>
+            <mvc:default-views>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                    <property name="jsonpParameterNames">
+                        <set>
+                            <value>jsonp</value>
+                            <value>callback</value>
+                        </set>
+                    </property>
+                </bean>
+            </mvc:default-views>
+        </mvc:content-negotiation>
+        <mvc:freemarker cache-views="false"  suffix=".ftl"/>
+    </mvc:view-resolvers>
+----
+必须加上
+[source,xml]
+----
+<filter>
+<filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+<init-param>
+    <param-name>encoding</param-name>
+    <param-value>utf-8</param-value>
+</init-param>
+</filter>
+<filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+----
