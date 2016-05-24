@@ -8,8 +8,14 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
       ">
+    <!-- 注解扫描包 -->
     <context:component-scan base-package="com.example"/>
+    <!-- 开启注解 -->
     <mvc:annotation-driven/>
+    <!-- 静态资源访问 -->
+    <mvc:resources mapping="/static/**" location="classpath:/static/"/>
+    <mvc:resources mapping="/templates/**" location="classpath:/templates/"/>
+
     <!--JSP视图解析器-->
     <bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="classpath:/views/"/>
@@ -50,19 +56,18 @@
 
     <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
 
-    <mvc:redirect-view-controller
-            path="/redirect"
-            redirect-url="/status"
-            context-relative="true"
-            status-code="301"
-            keep-query-params="true"/>
+    <!--    <mvc:redirect-view-controller
+                path="/redirect"
+                redirect-url="/status"
+                context-relative="true"
+                status-code="301"
+                keep-query-params="true"/>
 
-    <mvc:status-controller path="/status" status-code="200"/>
+        <mvc:status-controller path="/status" status-code="200"/>
 
-    <mvc:view-controller path="/error/**" status-code="200"/>
+        <mvc:view-controller path="/error/**" status-code="200"/>
 
-    <mvc:default-servlet-handler/>
-    <mvc:resources mapping="/static/**" location="classpath:/static/"/>
-    <mvc:resources mapping="/templates/**" location="classpath:/templates/"/>
+        <mvc:default-servlet-handler/>-->
+
 
 </beans>

@@ -4,10 +4,341 @@
 :image-width: 500
 :base-root: .
 === 主要介绍spring mvc控制框架的流程及原理
+== Spring Web MVC处理请求的流程
+image::../{base-root}/doc/spring-web-mvc-workflow.jpg[Spring Web MVC处理请求的流程, link="../{base-root}/doc/spring-web-mvc-workflow.jpg"]
+
+具体执行步骤如下：
+
+1.  首先用户发送请求————>前端控制器，前端控制器根据请求信息（如URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；图2-1中的1、2步骤；
+2.  页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在Spring Web MVC中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个ModelAndView（模型数据和逻辑视图名）；图2-1中的3、4、5步骤；
+3.  前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；图2-1中的步骤6、7；
+4.  前端控制器再次收回控制权，将响应返回给用户，图2-1中的步骤8；至此整个结束。
+
+== Spring Web MVC架构
+
+image::../{base-root}/doc/spring-web-mvc-arch.jpg[Spring Web MVC架构, link="../{base-root}/doc/spring-web-mvc-arch.jpg"]
+
+用户发送请求到前端控制器
+
+[source,xml]
+----
+<servlet>
+    <servlet-name>spring</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/</url-pattern>
+</servlet-mapping>
+----
+
+架构图对应的DispatcherServlet核心代码如下:
+
+[source,java]
+----
+//前端控制器的分派方法
+protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpServletRequest processedRequest = request;
+		HandlerExecutionChain mappedHandler = null;
+		boolean multipartRequestParsed = false;
+
+		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+
+		try {
+			ModelAndView mv = null;
+			Exception dispatchException = null;
+			try {
+			　　//检查是否是请求multipart如文件上传，如果是将通过multipartResolver解析
+				processedRequest = checkMultipart(request);
+				multipartRequestParsed = (processedRequest != request);
+
+				// Determine handler for the current request.
+				//步骤2,请求到处理器(页面控制器)的映射，通过HanMapping进行映射
+				mappedHandler = getHandler(processedRequest);
+				if (mappedHandler == null || mappedHandler.getHandler() == null) {
+					noHandlerFound(processedRequest, response);
+					return;
+				}
+
+				// Determine handler adapter for the current request.
+				//步骤3,处理适配，即交我们的处理器包装成相应的适配器，
+				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+
+				// Process last-modified header, if supported by the handler.
+                 // 304 Not Modified缓存支持
+				String method = request.getMethod();
+				boolean isGet = "GET".equals(method);
+				if (isGet || "HEAD".equals(method)) {
+					long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
+					if (logger.isDebugEnabled()) {
+						logger.debug("Last-Modified value for [" + getRequestUri(request) + "] is: " + lastModified);
+					}
+					if (new ServletWebRequest(request, response).checkNotModified(lastModified) && isGet) {
+						return;
+					}
+				}
+ 　　　　　　　// 执行处理器相关的拦截器的预处理（HandlerInterceptor.preHandle）
+				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+					return;
+				}
+
+				// Actually invoke the handler.
+				// 步骤4、由适配器执行处理器（调用处理器相应功能处理方法）
+				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+				if (asyncManager.isConcurrentHandlingStarted()) {
+					return;
+				}
+
+				applyDefaultViewName(processedRequest, mv);
+				 // 执行处理器相关的拦截器的后处理（HandlerInterceptor.postHandle）
+				mappedHandler.applyPostHandle(processedRequest, response, mv);
+			}
+			catch (Exception ex) {
+				dispatchException = ex;
+			}
+
+			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+		}
+		catch (Exception ex) {
+			triggerAfterCompletion(processedRequest, response, mappedHandler, ex);
+		}
+		catch (Error err) {
+			triggerAfterCompletionWithError(processedRequest, response, mappedHandler, err);
+		}
+		finally {
+			if (asyncManager.isConcurrentHandlingStarted()) {
+				// Instead of postHandle and afterCompletion
+				if (mappedHandler != null) {
+					mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
+				}
+			}
+			else {
+				// Clean up any resources used by a multipart request.
+				if (multipartRequestParsed) {
+					cleanupMultipart(processedRequest);
+				}
+			}
+		}
+	}
+	//....
+	private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,
+    			HandlerExecutionChain mappedHandler, ModelAndView mv, Exception exception) throws Exception {
+
+    		boolean errorView = false;
+
+    		if (exception != null) {
+    			if (exception instanceof ModelAndViewDefiningException) {
+    				logger.debug("ModelAndViewDefiningException encountered", exception);
+    				mv = ((ModelAndViewDefiningException) exception).getModelAndView();
+    			}
+    			else {
+    				Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);
+    				mv = processHandlerException(request, response, handler, exception);
+    				errorView = (mv != null);
+    			}
+    		}
+
+    		// Did the handler return a view to render?
+    		 //步骤5 步骤6、解析视图并进行视图的渲染
+             //步骤5 由ViewResolver解析View（viewResolver.resolveViewName(viewName, locale)）
+              //步骤6 视图在渲染时会把Model传入（view.render(mv.getModelInternal(), request, response);）
+    		if (mv != null && !mv.wasCleared()) {
+    			render(mv, request, response);
+    			if (errorView) {
+    				WebUtils.clearErrorRequestAttributes(request);
+    			}
+    		}
+    		else {
+    			if (logger.isDebugEnabled()) {
+    				logger.debug("Null ModelAndView returned to DispatcherServlet with name '" + getServletName() +
+    						"': assuming HandlerAdapter completed request handling");
+    			}
+    		}
+
+    		if (WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) {
+    			// Concurrent handling started during a forward
+    			return;
+    		}
+            //执行处理器相关的拦截器的完成后处理（HandlerInterceptor.afterCompletion）
+    		if (mappedHandler != null) {
+    			mappedHandler.triggerAfterCompletion(request, response, null);
+    		}
+    	}
+----
+
+核心架构的具体流程步骤如下：
+
+1.  首先用户发送请求——>DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一访问点，进行全局的流程控制；
+2.  DispatcherServlet——>HandlerMapping， HandlerMapping将会把请求映射为HandlerExecutionChain对象（包含一个Handler处理器（页面控制器）对象、多个HandlerInterceptor拦截器）对象，通过这种策略模式，很容易添加新的映射策略；
+[source,java]
+----
+/**
+	 * Return the HandlerExecutionChain for this request.
+	 * <p>Tries all handler mappings in order.
+	 * @param request current HTTP request
+	 * @return the HandlerExecutionChain, or {@code null} if no handler could be found
+	 */
+	protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+		for (HandlerMapping hm : this.handlerMappings) {
+			if (logger.isTraceEnabled()) {
+				logger.trace(
+						"Testing handler map [" + hm + "] in DispatcherServlet with name '" + getServletName() + "'");
+			}
+			HandlerExecutionChain handler = hm.getHandler(request);
+			if (handler != null) {
+				return handler;
+			}
+		}
+		return null;
+	}
+----
+3.  DispatcherServlet——>HandlerAdapter，HandlerAdapter将会把处理器包装为适配器，从而支持多种类型的处理器，即适配器设计模式的应用，从而很容易支持很多类型的处理器；
+[source,java]
+----
+/**
+ * Return the HandlerAdapter for this handler object.
+ * @param handler the handler object to find an adapter for
+ * @throws ServletException if no HandlerAdapter can be found for the handler. This is a fatal error.
+ */
+protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletException {
+    for (HandlerAdapter ha : this.handlerAdapters) {
+        if (logger.isTraceEnabled()) {
+            logger.trace("Testing handler adapter [" + ha + "]");
+        }
+        if (ha.supports(handler)) {
+            return ha;
+        }
+    }
+    throw new ServletException("No adapter for handler [" + handler +
+            "]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
+}
+----
+
+4.  HandlerAdapter——>处理器功能处理方法的调用，HandlerAdapter将会根据适配的结果调用真正的处理器的功能处理方法，完成功能处理；并返回一个ModelAndView对象（包含模型数据、逻辑视图名）；
+[source,java]
+----
+// Actually invoke the handler.
+mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+//...
+/**
+ * Use the given handler to handle this request.
+ * The workflow that is required may vary widely.
+ * @param request current HTTP request
+ * @param response current HTTP response
+ * @param handler handler to use. This object must have previously been passed
+ * to the {@code supports} method of this interface, which must have
+ * returned {@code true}.
+ * @throws Exception in case of errors
+ * @return ModelAndView object with the name of the view and the required
+ * model data, or {@code null} if the request has been handled directly
+ */
+ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception;
+----
+
+5.  ModelAndView的逻辑视图名——> ViewResolver， ViewResolver将把逻辑视图名解析为具体的View，通过这种策略模式，很容易更换其他视图技术；
+6.  View——>渲染，View会根据传进来的Model模型数据进行渲染，此处的Model实际是一个Map数据结构，因此很容易支持其他视图技术；
+
+[source,java]
+----
+// Did the handler return a view to render?
+if (mv != null && !mv.wasCleared()) {
+    render(mv, request, response);
+    if (errorView) {
+        WebUtils.clearErrorRequestAttributes(request);
+    }
+}
+//...
+/**
+	 * Render the given ModelAndView.
+	 * <p>This is the last stage in handling a request. It may involve resolving the view by name.
+	 * @param mv the ModelAndView to render
+	 * @param request current HTTP servlet request
+	 * @param response current HTTP servlet response
+	 * @throws ServletException if view is missing or cannot be resolved
+	 * @throws Exception if there's a problem rendering the view
+	 */
+	protected void render(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// Determine locale for request and apply it to the response.
+		Locale locale = this.localeResolver.resolveLocale(request);
+		response.setLocale(locale);
+		View view;
+		if (mv.isReference()) {
+			// We need to resolve the view name.
+			view = resolveViewName(mv.getViewName(), mv.getModelInternal(), locale, request);
+			if (view == null) {
+				throw new ServletException("Could not resolve view with name '" + mv.getViewName() +
+						"' in servlet with name '" + getServletName() + "'");
+			}
+		}
+		else {
+			// No need to lookup: the ModelAndView object contains the actual View object.
+			view = mv.getView();
+			if (view == null) {
+				throw new ServletException("ModelAndView [" + mv + "] neither contains a view name nor a " +
+						"View object in servlet with name '" + getServletName() + "'");
+			}
+		}
+		// Delegate to the View object for rendering.
+		if (logger.isDebugEnabled()) {
+			logger.debug("Rendering view [" + view + "] in DispatcherServlet with name '" + getServletName() + "'");
+		}
+		try {
+			view.render(mv.getModelInternal(), request, response);
+		}
+		catch (Exception ex) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("Error rendering view [" + view + "] in DispatcherServlet with name '" +
+						getServletName() + "'", ex);
+			}
+			throw ex;
+		}
+	}
+//...
+/**
+ * Resolve the given view name into a View object (to be rendered).
+ * <p>The default implementations asks all ViewResolvers of this dispatcher.
+ * Can be overridden for custom resolution strategies, potentially based on
+ * specific model attributes or request parameters.
+ * @param viewName the name of the view to resolve
+ * @param model the model to be passed to the view
+ * @param locale the current locale
+ * @param request current HTTP servlet request
+ * @return the View object, or {@code null} if none found
+ * @throws Exception if the view cannot be resolved
+ * (typically in case of problems creating an actual View object)
+ * @see ViewResolver#resolveViewName
+ */
+protected View resolveViewName(String viewName, Map<String, Object> model, Locale locale,
+        HttpServletRequest request) throws Exception {
+    for (ViewResolver viewResolver : this.viewResolvers) {
+        View view = viewResolver.resolveViewName(viewName, locale);
+        if (view != null) {
+            return view;
+        }
+    }
+    return null;
+}
+----
+7.  返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。
+
+此处我们只是讲了核心流程，没有考虑拦截器、本地解析、文件上传解析等，后边再细述。
+
+在此我们可以看出具体的核心开发步骤：
+1.  DispatcherServlet在web.xml中的部署描述，从而拦截请求到Spring Web MVC
+2.  HandlerMapping的配置，从而将请求映射到处理器
+3.  HandlerAdapter的配置，从而支持多种类型的处理器
+4.  ViewResolver的配置，从而将逻辑视图名解析为具体视图技术
+5.  处理器（页面控制器）的配置，从而进行功能处理
 
 image::../{base-root}/doc/spring_framework.png[spring框架图, link="../{base-root}/doc/spring_framework.png"]
 
-# Spring 面向方面编程（AOP）和控制反转 （IOC） 容器
+# Spring 面向方面编程(AOP)和控制反转(IOC)容器
 * 控制反转 (Inversion of Control)，英文缩写IoC
 
 应用控制反转，对象在被创建的时候，由一个调控系统内所有对象的外界实体将其所依赖的对象的引用传递给它。
