@@ -282,3 +282,6 @@ Spring3.0引入RESTful架构风格支持(通过@PathVariable注解和一些其�
     3. 通过GET访问重定向的地址，此时FlashMap会把1放到FlashMap的数据取出放到请求中，并从FlashMap中删除；从而支持在两次请求之间保存数据并防止了重复表单提交）。
 * Spring Web MVC提供FlashMapManager用于管理FlashMap，默认使用SessionFlashMapManager，即数据默认存储在session中。
 
+# 源码阅读:
+https://github.com/tomlxq/best-practice/tree/master/springmvc-helloworld[https://github.com/tomlxq/best-practice/tree/master/springmvc-helloworld]
+
