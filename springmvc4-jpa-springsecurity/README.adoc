@@ -25,3 +25,5 @@ include::{base-root}/src/main/resources/application.properties[]
 ----
 include::{base-root}/src/main/java/com/tom/config/AppConfig.java[]
 ----
+
+> 我们这儿使用了正则表达式排除了com.tom.web.*，假如我们不排序，运行单元测试时会报错．

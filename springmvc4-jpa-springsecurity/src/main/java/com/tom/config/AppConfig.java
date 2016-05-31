@@ -42,7 +42,7 @@ public class AppConfig {
     public JavaMailSenderImpl javaMailSenderImpl() {
         JavaMailSenderImpl mailSenderImpl = new JavaMailSenderImpl();
         mailSenderImpl.setHost(env.getProperty("smtp.host"));
-        mailSenderImpl.setPort(env.getProperty("smtp.port", Integer.class));
+       // mailSenderImpl.setPort(env.getProperty("smtp.port", Integer.class));
         mailSenderImpl.setProtocol(env.getProperty("smtp.protocol"));
         mailSenderImpl.setUsername(env.getProperty("smtp.username"));
         mailSenderImpl.setPassword(env.getProperty("smtp.password"));
@@ -51,6 +51,7 @@ public class AppConfig {
         javaMailProps.put("mail.smtp.auth", true);
         javaMailProps.put("mail.smtp.starttls.enable", true);
 
+        javaMailProps.setProperty("mail.debug", "true");
         mailSenderImpl.setJavaMailProperties(javaMailProps);
 
         return mailSenderImpl;
