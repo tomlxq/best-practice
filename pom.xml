@@ -17,6 +17,6 @@
           <module>springmvc-introduce</module>
           <module>springmvc-helloworld</module>
           <module>parent</module>
-
+          <module>springmvc4-jpa-springsecurity</module>
       </modules>
 </project>
