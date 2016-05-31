@@ -1,0 +1,27 @@
+:toc:
+:icons: font
+:source-highlighter: prettify
+:image-width: 500
+:base-root: .
+= 使用JavacConfig集成spring mvc4+jpa+freemarker
+
+== 配置必要的依赖
+`/pom.xml`
+[source,xml]
+----
+include::{base-root}/pom.xml[]
+----
+
+== 配置数据库连接信息及email配置文件
+`/src/main/resources/application.properties`
+[source,xml]
+----
+include::{base-root}/src/main/resources/application.properties[]
+----
+
+== 配置普通的service层,例如PropertySourcesPlaceholderConfigurer及JavaMailSender
+`/src/main/java/com/tom/config/AppConfig.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/config/AppConfig.java[]
+----
