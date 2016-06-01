@@ -3,6 +3,9 @@
 :source-highlighter: prettify
 :image-width: 500
 :base-root: .
+////
+http://sivalabs.in/2014/03/springmvc4-spring-data-jpa-springsecurity-configuration-using-javaconfig/
+////
 = 使用JavacConfig集成spring mvc4+jpa+freemarker
 
 == 配置必要的依赖
@@ -27,3 +30,53 @@ include::{base-root}/src/main/java/com/tom/config/AppConfig.java[]
 ----
 
 > 我们这儿使用了正则表达式排除了com.tom.web.*，假如我们不排序，运行单元测试时会报错．
+
+== 配置持久层
+`/src/main/java/com/tom/config/PersistenceConfig.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/config/PersistenceConfig.java[]
+----
+我们配置datasource和JPA　entityManagerFactory,　使用hibernate实现
+也配置了dataSourceInitializer,用来初始化数据库表．
+可以通过在application.properties中的init-db来决定是否要执行db.sql.
+最后为JPA持久层接口，启用EnableJpaRepositories，来扫描com.tom.repositories包．
+
+== 配置web相关的bean
+`/src/main/java/com/tom/web/config/WebMvcConfig.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/web/config/WebMvcConfig.java[]
+----
+
+== 配置Dispatcher Servlet,使用AbstractAnnotationConfigDispatcherServletInitializer
+`/src/main/java/com/tom/web/config/SpringWebAppInitializer.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/web/config/SpringWebAppInitializer.java[]
+----
+> AppConfig.java作为根配置类，WebMvcConfig.java作为spring mvc配置类，与web.xml里非常类似，在web.xml中，配置ContextLoaderListener和DispatcherServlet的contextConfigLocation
+
+== 配置 SpringSecurity
+在内存中配置jdbc
+[source,java]
+----
+registry
+.inMemoryAuthentication()
+.withUser("siva")  // #1
+  .password("siva")
+  .roles("USER")
+  .and()
+.withUser("admin") // #2
+  .password("admin")
+  .roles("ADMIN","USER");
+registry.jdbcAuthentication().dataSource(dataSource);
+----
+=== 创建SecurityUser
+它扩展了org.springframework.security.core.userdetails.UserDetails,可以从我们的数据库中查找出来
+=== 实现UserDetailsService
+`/src/main/java/com/tom/config/CustomUserDetailsService.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/config/CustomUserDetailsService.java[]
+----
