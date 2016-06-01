@@ -9,6 +9,7 @@
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
+          <root url="file://$MODULE_DIR$/target/generated-resources" />
         </sourceRoots>
       </configuration>
     </facet>
@@ -20,7 +21,16 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/target" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target/.wro4j" />
+      <excludeFolder url="file://$MODULE_DIR$/target/apache-tomcat-maven-plugin" />
+      <excludeFolder url="file://$MODULE_DIR$/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/maven-status" />
+      <excludeFolder url="file://$MODULE_DIR$/target/temp535272495835910369818057808268267" />
+      <excludeFolder url="file://$MODULE_DIR$/target/temp655957990416044148818588929586439" />
+      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/tomcat" />
+      <excludeFolder url="file://$MODULE_DIR$/target/wro" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
