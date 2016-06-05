@@ -18,5 +18,6 @@
           <module>springmvc-helloworld</module>
           <module>parent</module>
           <module>springmvc4-jpa-springsecurity</module>
+          <module>gs-annotation</module>
       </modules>
 </project>
