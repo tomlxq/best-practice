@@ -1,138 +1,15 @@
 <!DOCTYPE HTML>
 <html>
-<head>
+<head><meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <link rel="stylesheet" href="/webjars/webix/3.2.0/webix.css" type="text/css">
     <script src="/webjars/webix/3.2.0/webix.js" type="text/javascript"></script>
 </head>
 <body>
-<!--<div id="testA" style="width:400px; height:300px; margin:10px;">demo</div>-->
-<script type="text/javascript" charset="utf-8">
-    /* place for webix.ui */
-
-    /*
-     例子6: 事件
-     将操作函数附加在控件上实现对App的交相事件
-     *　使用ID
-     *  必须指定事件在一个组件视图中
-     *  附加一个函数控件
-
-     如何添加一行数据到列表
-     1. 为了增加一行数据到列表，首先要从表单中获取文本值。
-     2. 获取表单的值用表单的ID, 如$$("myform").getValues()
-     3. 为了得到指定的值，需要指定表单里控件的name 如$$("myform").getValues().title
-
-     通过列表更新数据
-     １. 传输列表中所选的数据项到form中对应的域
-     ２. 将form中己改变的数据替换掉原来列表中的数据
-
-     通过列表删除数据
-     1. 获取列表中所选项的ID
-     2. 将所选表列的数据从列表中的删除
-
-     改进删除表单,在删之前给出提示确认框,通过webix.confirm()实现
-     title,窗口标题
-     text,窗口的提示信息
-     callback，点选按按钮(yes或no)后的触发函数
-     */
-    webix.ui.fullScreen();
-    var filmset = [
-        {id: 1, title: "The Shawshank Redemption", year: 1994},
-        {id: 2, title: "The Godfather", year: 1972},
-        {id: 3, title: "The Godfather: Part II", year: 1974},
-        {id: 4, title: "The Good, the Bad and the Ugly", year: 1966},
-        {id: 5, title: "My Fair Lady", year: 1964},
-        {id: 6, title: "12 Angry Men", year: 1957}
-    ];
-
-    //function add_row() {
-    //    webix.message("Add")
-    //}
-    //function update_row() {
-    //    webix.message("Update")
-    //}
-    //function delete_row() {
-    //    webix.message("Delete")
-    //}
-
-
-    webix.ui({
-        rows: [
-            {
-                view: "toolbar", id: "mybar", elements: [
-                {view: "button", value: "Add", width: 70, click: add_row},
-                {view: "button", value: "Delete", width: 70, click: delete_row},
-                {view: "button", value: "Update", width: 70, click: update_row},
-                {view: "button", value: "Clear Form", width: 85, click: "$$('myform').clear()"}]
-            },
-            {
-                cols: [
-                    {
-                        view: "form", id: "myform", width: 200, elements: [
-                        {view: "text", name: "title", placeholder: "Title", width: 180, align: "center"},
-                        {view: "text", name: "year", placeholder: "Year", width: 180, align: "center"}]
-                    },
-                    {
-                        view: "list",
-                        id: "mylist",
-                        template: "#title# - #year#",
-                        select: true, //enables selection
-                        height: 400,
-                        data: filmset
-                    }
-                ]
-            }
-        ]
-    });
-    //adding form data to a list while creating a new row for it
-    function add_row() {
-        $$("mylist").add({
-            title: $$("myform").getValues().title,
-            year: $$("myform").getValues().year,
-        })
-    }
-    //一旦选择某项，则会自动将传设置到form表单中
-    $$("mylist").attachEvent("onAfterSelect", function (id) {
-        $$("myform").setValues({
-            title: $$("mylist").getItem(id).title,
-            year: $$("mylist").getItem(id).year
-        });
-    });
-    function update_row() {
-        //获取列表中所选项的ID
-        var sel = $$("mylist").getSelectedId();
-        if (!sel) return;
-        //得到form表单中改变的值
-        var value1 = $$("myform").getValues().title;
-        var value2 = $$("myform").getValues().year;
-
-        //获取列表中所选择的项并对相关属性赋值
-        var item = $$("mylist").getItem(sel); //selected item object
-        item.title = value1;
-        item.year = value2;
-        //对列表中原来的对象赋值
-        $$("mylist").updateItem(sel, item);
-    }
-
-    function delete_row()
-    {
-        //获取列表中所选项的ID
-        var sel = $$("mylist").getSelectedId();
-        if (!sel) return;
-        var item = $$("mylist").getItem(sel); //selected item object
-        var title=item.title;
-        var year=item.year;
-        webix.confirm({
-            title: "Delete",
-            text: "Are you sure you want to delete ["+title+" - "+year+"] from the list?",
-            callback: function(result) {
-                if (result) {
-                    //将所选表列的数据从列表中的删除
-                    $$("mylist").remove(sel);
-                }
-            }
-        });
-
-    }
-</script>
+<p><a href="demo1.html">例子1: 行和列</a></p>
+<p><a href="demo2.html">例子2:  width 和 height设置布局大小</a></p>
+<p><a href="demo3.html">例子3: 自定义的html实现布局</a></p>
+<p><a href="demo4.html">例子4: 栏和列</a></p>
+<p><a href="demo5.html">例子5: 工具栏与列表</a></p>
+<p><a href="demo6.html">例子6: 事件,实现对列表的添删改查</a></p>
 </body>
 </html>
