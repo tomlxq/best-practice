@@ -8,6 +8,14 @@ http://webix.com/quick-start/introduction.html#!/9
 ////
 = webix快速入门
 
+一个强大的JavaScript UI组件库。
+
+> XB 软件公司最近发布了JavaScript UI 库Webix ，其中包含的组件超过45个，用这些组件可以构建跟HTML5 和 CSS3 兼容的程序，这些程序不仅能在个人电脑上运行，还能用在iOS、 Android 和 Blackberry 设备上运行。它能访问离线web存储、地理位置（ geolocation） API、能在画布上绘图，并集成了jQuery 和 Backbone.js。
+Webix提供了简单的服务端集成控件，PHP、 ASP.NET、Java和 Ruby等各种技术都可以跟客户端的Webix部件直接通讯。此外这些组件还能用在一些MVC框架中，比如RoR、ASP.NET MVC、Spring、Struts 和 Grails.
+Webix 库中包含的组件 有 Accordion、Calendar、Carousel、Chart、Colorboard、Context、ContextMenu、 DataTable、Dataview、Form、Form控件、Grouplist、HTMLform、IFrame、Layout、Resizer、List、Menu、Multiview、 Popup、Property Sheet、Scrollview、 Tabview、 Template、 Toolbar、 Tree、Treetable、 Unitlist、Uploader 和 Window。
+
+本文将对快速入门例子进行详细的解述。
+
 == 例子１: 行和列
 布局是通过行和列来决定的，行和列之间的border是通过type来设定的
 type的可能值有"line" (default), "head", "space", "wide" and "clean" (borderless)
@@ -250,3 +258,7 @@ webix.ui({
 
     }
 ```
+
+= 参考源码：
+
+https://github.com/tomlxq/best-practice/tree/master/gs-webix[https://github.com/tomlxq/best-practice/tree/master/gs-webix]
