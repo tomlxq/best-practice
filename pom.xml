@@ -19,5 +19,6 @@
           <module>parent</module>
           <module>springmvc4-jpa-springsecurity</module>
           <module>gs-annotation</module>
+          <module>gs-webix</module>
       </modules>
 </project>
