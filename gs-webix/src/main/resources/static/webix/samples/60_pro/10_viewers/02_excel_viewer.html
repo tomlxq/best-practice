@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../../../codebase/webix.css" type="text/css" media="screen" charset="utf-8">
+  <script src="../../../codebase/webix.js" type="text/javascript" charset="utf-8"></script>
+  <title>Excel Viewer</title>  
+</head>
+<body>
+  <script>
+    webix.ui({
+      type:"space", margin:-1,
+      rows:[
+        { view:"excelbar", id:"toolbar" },
+        { view:"excelviewer", toolbar:"toolbar", excelHeader:true, url:"binary->files/data.xlsx"}
+      ]
+    });
+  </script>
+</body>
+</html>

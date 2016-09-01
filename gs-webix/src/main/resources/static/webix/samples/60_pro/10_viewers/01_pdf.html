@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../../../codebase/webix.css" type="text/css" media="screen" charset="utf-8">
+  <script src="../../../codebase/webix.js" type="text/javascript" charset="utf-8"></script>
+  <title>Pdf Viewer</title>  
+</head>
+<body>
+  <script>
+    webix.ui({
+      type:"space",
+      rows:[
+        { view:"pdfbar", id:"toolbar" },
+        { view:"pdfviewer", id:"pdf", toolbar:"toolbar", url:"files/WebixDocs.pdf"}
+      ]
+    });
+  </script>
+</body>
+</html>

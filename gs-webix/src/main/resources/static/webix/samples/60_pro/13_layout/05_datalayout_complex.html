@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../../../codebase/webix.css" type="text/css" media="screen" charset="utf-8">
+    <script src="../../../codebase/webix.js" type="text/javascript" charset="utf-8"></script>
+    <title>Data Layout - Complex structure operations</title>
+  </head>
+  <body>
+    <div id='layout_div' style='width:800px; height:600px; margin:20px;'></div>
+    <script type="text/javascript" charset="utf-8">
+
+    var subconfig = {
+      isolate:true,
+      rows:[
+        { view:"toolbar", elements:[
+          { view:"button", value:"Add record", click:function(){
+            this.getTopParentView().$$("l1").add({ income: 0 });
+            this.getTopParentView().$$("l2").add({ count: 10 });
+          }, width: 120 },
+          { view:"label", name:"month" }
+        ]},
+        { cols:[
+          { id:"l1", name:"data", view:"list", select:true, autoheight:true, template:"#income#" },
+          { },
+          { id:"l2", name:"data", view:"list", select:true, autoheight:true, template:"#count#" }
+        ]}
+      ]
+    };
+
+    var left = {
+      view:"datalayout",
+      id:"data",
+      type:"space",
+      rows:[
+        subconfig
+      ],
+      url:"data/data.js"
+    };
+
+    webix.ui({
+      container:"layout_div",
+      rows:[ left ]
+    });
+
+    </script>
+  </body>
+</html>
