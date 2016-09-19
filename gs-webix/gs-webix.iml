@@ -77,5 +77,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-core:4.3.2.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:4.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:webix:3.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars.bower:echarts:3.2.2" level="project" />
   </component>
 </module>

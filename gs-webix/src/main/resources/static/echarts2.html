@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+    <title>例子14: echarts2</title>
+    <link rel="stylesheet" href="/webix/codebase/webix.css" type="text/css">
+    <script src="/webix/codebase/webix.js" type="text/javascript"></script>
+    <script src="/js/echarts.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/samples.css" type="text/css">
+</head>
+<body>
+<script>
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+    webix.ui({
+        rows: [
+            {type: "header", template: "Preview"},
+            {
+                view: "echarts",
+                ready: function (chart) {
+                    chart.setOption(option);
+                }
+            },
+            {view: "resizer"}, {
+                view: "datatable",
+                autoConfig: true,
+                data: {"衬衫": 5, "羊毛衫": 20, "雪纺衫": 36, "裤子": 10, "高跟鞋": 10, "袜子": 20}
+            }
+        ]
+    });
+
+</script>
+</body>
+</html>

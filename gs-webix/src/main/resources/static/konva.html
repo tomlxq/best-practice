@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+    <title>例子11: konva</title>
+    <link rel="stylesheet" href="/webix/codebase/webix.css" type="text/css">
+    <script src="/webix/codebase/webix.js" type="text/javascript"></script>
+    <script src="/js/konva.js" type="text/javascript"></script>
+    <script src="/js/konva/demodata.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/samples.css" type="text/css">
+</head>
+<body>
+<script>
+
+    webix.ui({
+        rows: [
+            {type: "header", template: "Preview"},
+            {
+                view: "konva", ready: function (stage) {
+                var layer = new Konva.Layer();
+                stage.add(layer);
+
+                for (var ix = 0; ix < 20; ix++) {
+                    for (var iy = 0; iy < 20; iy++) {
+                        var box = new Konva.Rect({
+                            x: 40 * ix + 2,
+                            y: 40 * iy + 2,
+                            width: 38,
+                            height: 38,
+                            fill: 'darkgrey',
+                            stroke: 'white'
+                        });
+                        layer.add(box);
+                    }
+                }
+                layer.draw();
+            }
+            },
+            {view: "resizer"},
+            {view: "datatable", autoConfig: true, data: grid_data}
+        ]
+    });</script>
+</body>
+</html>
