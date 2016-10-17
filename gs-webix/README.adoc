@@ -262,3 +262,30 @@ webix.ui({
 = 参考源码：
 
 https://github.com/tomlxq/best-practice/tree/master/gs-webix[https://github.com/tomlxq/best-practice/tree/master/gs-webix]
+https://www.sitepoint.com/making-your-own-gantt-chart-with-webix/?utm_source=tuicool&utm_medium=referral
+http://webix.com/blog/creating-a-mobile-app-with-phonegap-and-webix/
+Using Third-party Libraries with Webix UI
+http://www.tuicool.com/articles/vuMN7z
+
+https://github.com/webix-hub/nodejs-rest
+```
+require([
+    "webix"
+], function(webix) {
+    webix.ready(function() {
+        console.log("webix ready event"); // never run
+    });
+})
+
+require([
+    "webix"
+], function(webix) {
+    webix.ready(function() {
+        console.log("webix ready event");
+    });
+
+    webix.callEvent("onReady", []); //triggers ready state
+})
+```
+
+http://webix.com/blog/using-webix-with-nodejs/
