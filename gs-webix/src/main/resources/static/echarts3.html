@@ -15,27 +15,28 @@
     option = {
 
         tooltip : {
-            trigger: 'axis'
+            trigger: 'axis'//tooltip触发方式:axis以X轴线触发,item以每一个数据项触发
         },
         legend: {
             data:['蒸发量','降水量','最低气温','最高气温']
         },
         toolbox: {
-            show : true,
+            show : true,//是否显示工具栏
             feature : {
                 mark : {show: true},
-                dataView : {show: true},
-                magicType : {show: true, type: ['line', 'bar']},
-                restore : {show: true},
-                saveAsImage : {show: true}
+                dataView : {show: true},//数据预览
+                magicType : {show: true, type: ['line', 'bar']},//支持柱形图和折线图的切换
+                restore : {show: true},//复原
+                saveAsImage : {show: true}//是否保存图片
             }
         },
         xAxis : [
             {
-                type : 'category',
+                type : 'category',//X轴均为category，Y轴均为value
                 position: 'bottom',
-                boundaryGap: true,
-                axisLine : {    // 轴线
+                boundaryGap: true,//数值轴两端的空白策略
+                /*
+                axisLine : {    // 坐标轴线
                     show: true,
                     lineStyle: {
                         color: 'green',
@@ -66,7 +67,7 @@
                         fontWeight: 'bold'
                     }
                 },
-                 splitLine : {
+                 splitLine : { // 分隔线
                     show:true,
                     lineStyle: {
                         color: '#483d8b',
@@ -79,7 +80,7 @@
                     areaStyle:{
                         color:['rgba(144,238,144,0.3)','rgba(135,200,250,0.3)']
                     }
-                },
+                },*/
                 data : [
                     '1','2','3','4','5',
                     {
@@ -107,6 +108,7 @@
                 //max: 300,
                 //splitNumber: 5,
                 boundaryGap: [0,0.1],
+             /*
                 axisLine : {    // 轴线
                     show: true,
                     lineStyle: {
@@ -151,11 +153,12 @@
                     areaStyle:{
                         color:['rgba(205,92,92,0.3)','rgba(255,215,0,0.3)']
                     }
-                }
+                }*/
             },
             {
                 type : 'value',
-                splitNumber: 10,
+                splitNumber: 10, // 分割段数，默认为5
+
                 axisLabel : {
                     formatter: function (value) {
                         // Function formatter
@@ -163,7 +166,8 @@
                     }
                 },
                 splitLine : {
-                    show: false
+                    show: false,
+                 //   lineStyle:{type:"dashed"}// 分割线类型'solid' | 'dotted' | 'dashed' 虚线类型
                 }
             }
         ],
@@ -171,24 +175,25 @@
             {
                 name: '蒸发量',
                 type: 'bar',
+                itemStyle : { normal: {label : {show: true}}},
                 data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
             },
             {
                 name: '降水量',
-                type: 'bar',
+                type: 'bar',itemStyle : { normal: {label : {show: true}}},
                 data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
             },
             {
                 name:'最低气温',
                 type: 'line',
-                yAxisIndex: 1,
+                yAxisIndex: 1,itemStyle : { normal: {label : {show: true}}},
                 data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
             },
             {
                 name:'最高气温',
                 type: 'line',
                 xAxisIndex: 1,
-                yAxisIndex: 1,
+                yAxisIndex: 1,itemStyle : { normal: {label : {show: true}}},
                 data: [12.0, 12.2, 13.3, 14.5, 16.3, 18.2, 28.3, 33.4, 31.0, 24.5, 18.0, 16.2]
             }
         ]
@@ -207,9 +212,134 @@
                 view: "datatable",
                 autoConfig: true,
                 data: {"衬衫": 5, "羊毛衫": 20, "雪纺衫": 36, "裤子": 10, "高跟鞋": 10, "袜子": 20}
+            },{
+                view: "echarts",
+                ready: function (chart) {
+                    chart.setOption(option2);
+                }
+            },{
+                view: "echarts",
+                ready: function (chart) {
+                    chart.setOption(option3);
+                }
             }
         ]
     });
+    option3 = {
+        title : {
+            text: '未来一周气温变化',
+            subtext: '纯属虚构'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['最高气温','最低气温']
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : ['周一','周二','周三','周四','周五','周六','周日']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel : {
+                    formatter: '{value} °C'
+                }
+            }
+        ],
+        series : [
+            {
+                name:'最高气温',
+                type:'line',
+                data:[11, 11, 15, 13, 12, 13, 10],
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name: '平均值'}
+                    ]
+                }
+            },
+            {
+                name:'最低气温',
+                type:'line',
+                data:[1, -2, 2, 5, 3, 2, 0],
+                markPoint : {
+                    data : [
+                        {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                    ]
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name : '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+    option2 = {
+        title: {
+            text: 'echarts3的折线图分段显示不同的颜色',
+            left: 'center',
+            link: 'http://phping.sinaapp.com'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c}'
+        },
+        legend: {
+            left: 'left',
+            data: ['指数']
+        },
+        xAxis: {
+            type: 'category',
+            name: 'x',
+            splitLine: {show: false},
+            data: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        yAxis: {
+            type: 'log',
+            name: 'y'
+        },
+        series: [
+            {
+                name: '指数',
+                type: 'line',
+                symbol:'none',
+                data:[4, 8, 16, 32, 64,'-','-']
+            },
+            {
+                name: '指数',
+                type: 'line',
+                data:['-','-','-','-',64,128,256]
+            }
+        ]
+    };
 
 </script>
 </body>
