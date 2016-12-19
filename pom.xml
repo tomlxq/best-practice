@@ -21,5 +21,6 @@
           <module>gs-annotation</module>
           <module>gs-webix</module>
           <module>gs-consuming-rest</module>
+          <module>springmvc-hibernate-oracle</module>
       </modules>
 </project>
