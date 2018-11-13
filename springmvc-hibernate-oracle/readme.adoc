@@ -23,6 +23,9 @@ In earlier version of Hibernate it used org.hibernate.context.ThreadLocalSession
 * Oracle 10g	org.hibernate.dialect.Oracle10gDialect
 * Oracle 9i	org.hibernate.dialect.Oracle9iDialect
 
+## Spring Boot,Spring Data JPA多数据源支持
+http://www.tuicool.com/articles/yY7Fre
+
 Ref:
 
 !(https://community.oracle.com/docs/DOC-983401)[https://community.oracle.com/docs/DOC-983401]
