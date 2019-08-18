@@ -7,7 +7,9 @@ import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -43,7 +45,22 @@ public class TomProxy {
             JavaCompiler.CompilationTask task = compiler.getTask(null, manager, null, null, null, iterable);
             task.call();
             manager.close();
+            //.class动态加载到JVM
+            //返回被代理后的代理对
+            Class<?> aClass = loader.findClass("$Proxy0");
+            Constructor<?> constructor = aClass.getConstructor(TomInvocationHandler.class);
+            return constructor.newInstance(h);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;
