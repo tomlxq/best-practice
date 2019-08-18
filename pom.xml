@@ -32,8 +32,12 @@
         <jackson.version>2.9.9</jackson.version>
     </properties>
     <dependencyManagement>
-
         <dependencies>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.6</version>
+            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -120,6 +124,7 @@
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>

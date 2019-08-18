@@ -9,6 +9,6 @@ import java.lang.reflect.Method;
  * @date 2019/8/18
  */
 public interface TomInvocationHandler {
-    public Object invoke(Object proxy, Method method, Object[] args)
+    Object invoke(Object proxy, Method method, Object[] args)
             throws Throwable;
 }
