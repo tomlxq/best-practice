@@ -1,4 +1,4 @@
-package com.example.demo.proxy.jdk.manual;
+package com.example.demo.proxy.manual;
 
 import java.lang.reflect.Method;
 

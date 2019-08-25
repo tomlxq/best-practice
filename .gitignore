@@ -15,7 +15,7 @@ target/
 .project
 .classpath
 
-
+*.class
 # idea ignore
 .idea/
 *.ipr

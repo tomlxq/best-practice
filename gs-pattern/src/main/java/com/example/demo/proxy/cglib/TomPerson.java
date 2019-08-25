@@ -1,4 +1,4 @@
-package com.example.demo.cglib;
+package com.example.demo.proxy.cglib;
 
 /**
  * 功能描述

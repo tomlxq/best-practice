@@ -1,4 +1,4 @@
-package com.example.demo.proxy.jdk.manual;
+package com.example.demo.proxy.manual;
 
 import com.example.demo.proxy.jdk.Person;
 

@@ -1,4 +1,4 @@
-package com.example.demo.proxy.jdk.manual;
+package com.example.demo.proxy.manual;
 
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
@@ -68,7 +68,7 @@ public class TomProxy {
 
     private static String generateCodes(Class<?> anInterface) {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package com.example.demo.proxy.jdk.manual;" + LN);
+        stringBuffer.append("package com.example.demo.proxy.manual;" + LN);
         stringBuffer.append("import java.lang.reflect.Method;" + LN);
         stringBuffer.append("public final class " + $_PROXY_NAME + " implements " + anInterface.getName() + " {" + LN);
         String invocationHandlerName = TomInvocationHandler.class.getName();

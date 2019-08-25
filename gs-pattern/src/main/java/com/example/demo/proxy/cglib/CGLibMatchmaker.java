@@ -1,4 +1,4 @@
-package com.example.demo.cglib;
+package com.example.demo.proxy.cglib;
 
 
 import net.sf.cglib.proxy.Enhancer;
