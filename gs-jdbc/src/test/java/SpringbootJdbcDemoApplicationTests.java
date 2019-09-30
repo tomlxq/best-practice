@@ -1,26 +1,30 @@
 import com.example.SpringBootJdbcDemoApplication;
 import com.example.domain.User;
 import com.example.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by tom on 2016/5/21.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(SpringBootJdbcDemoApplication.class)
+@WebAppConfiguration
+@Slf4j
 public class SpringBootJdbcDemoApplicationTests
 {
-     Logger logger= LoggerFactory.getLogger(SpringBootJdbcDemoApplicationTests.class);
     @Autowired
     private UserRepository userRepository;
 
@@ -54,7 +58,7 @@ public class SpringBootJdbcDemoApplicationTests
     public void createUser() {
         User user = new User(0, "tom", "tom@gmail.com");
         User savedUser = userRepository.create(user);
-        logger.debug("{}",savedUser);
+        log.debug("{}",savedUser);
         User newUser = userRepository.findUserById(savedUser.getId());
         assertEquals("tom", newUser.getName());
         assertEquals("tom@gmail.com", newUser.getEmail());

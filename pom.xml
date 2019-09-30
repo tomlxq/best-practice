@@ -23,6 +23,8 @@
         <module>springmvc-hibernate-oracle</module>
         <module>gs-pattern</module>
         <module>gs-transaction</module>
+        <module>gs-common-webmvc</module>
+        <module>gs-manual-webmvc</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

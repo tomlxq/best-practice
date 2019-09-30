@@ -24,9 +24,9 @@ public class SpringBootJdbcDemoApplication {
     @Bean
     public DataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUrl(env.getProperty("spring.datasource.url"));
-        dataSource.setUsername(env.getProperty("spring.datasource.username"));//用户名
-        dataSource.setPassword(env.getProperty("spring.datasource.password"));//密码
+        dataSource.setUrl("jdbc:mysql://192.168.238.150:3306/demo");
+        dataSource.setUsername("root");//用户名
+        dataSource.setPassword("root");//密码
         dataSource.setInitialSize(2);
         dataSource.setMaxActive(20);
         dataSource.setMinIdle(0);

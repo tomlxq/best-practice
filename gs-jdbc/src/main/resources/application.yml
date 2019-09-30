@@ -1,13 +1,12 @@
 logging:
   level:
-    org.springframework: INFO
+    org.springframework: DEBUG
     com.example: DEBUG
 ################### DataSource Configuration ##########################
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gs-jdbc
+    url: jdbc:mysql://192.168.238.150:3306/demo
     username: root
-    password:
-    initialize: true
+    password: root
 init-db: true
