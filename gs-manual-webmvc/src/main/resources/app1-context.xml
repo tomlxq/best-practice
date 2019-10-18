@@ -9,4 +9,5 @@ http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <mvc:annotation-driven/>
     <context:component-scan base-package="com.guide" />
+    <context:property-placeholder location="classpath:application.properties"/>
 </beans>

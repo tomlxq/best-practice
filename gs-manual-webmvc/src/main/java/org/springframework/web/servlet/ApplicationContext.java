@@ -2,6 +2,7 @@ package org.springframework.web.servlet;
 
 
 import com.sun.org.apache.xerces.internal.dom.DeferredElementNSImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.annotation.Autowired;
 import org.springframework.web.annotation.Controller;
 import org.springframework.web.annotation.Qualifier;
@@ -25,18 +26,18 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 功能描述
+ * ApplicationContext
  *
  * @author TomLuo
  * @date 2019/9/22
  */
-//@Slf4j
+@Slf4j
 public class ApplicationContext {
     private Map<String, Object> iocContainer = new ConcurrentHashMap<String, Object>();
 
     private List<String> classCache = new ArrayList<String>();
 
-
+    private String templatePath = null;
 
     public ApplicationContext(String contextConfigLocation) {
         try {
@@ -51,6 +52,11 @@ public class ApplicationContext {
             NodeList elementsByTagName = documentElement.getElementsByTagName("context:component-scan");
             Node item = elementsByTagName.item(0);
             String packagePath = ((DeferredElementNSImpl) item).getAttribute("base-package");
+
+            NodeList elementsByTagName2 = documentElement.getElementsByTagName("context:property-placeholder");
+            Node item2 = elementsByTagName2.item(0);
+            this.templatePath = ((DeferredElementNSImpl) item2).getAttribute("location");
+
             //3. 注册 把所有的class找出来存起来
             doRegister(packagePath);
             //4. 初始化 对有@Controller @Service @Repository的类进行实例化
@@ -149,6 +155,14 @@ public class ApplicationContext {
                 classCache.add(packagePath + "." + f.getName().replace(".class", ""));
             }
         }
+    }
+
+    public String getTemplatePath() {
+        return templatePath;
+    }
+
+    public void setTemplatePath(String templatePath) {
+        this.templatePath = templatePath;
     }
 
     public Object getBean(String name) {

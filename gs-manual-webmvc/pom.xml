@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>com.tom</groupId>
     <version>1.0-SNAPSHOT</version>
-
     <modelVersion>4.0.0</modelVersion>
     <artifactId>gs-manual-webmvc</artifactId>
     <packaging>war</packaging>
@@ -127,16 +126,6 @@
                         <artifactId>tomcat-juli</artifactId>
                         <version>${tomcat.version}</version>
                     </dependency>
-                    <!--<dependency>
-                        <groupId>org.apache.tomcat.embed</groupId>
-                        <artifactId>tomcat-embed-logging-juli</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.tomcat.embed</groupId>
-                        <artifactId>tomcat-embed-logging-log4j</artifactId>
-                        <version>${tomcat.version}</version>
-                    </dependency>-->
                 </dependencies>
             </plugin>
             <plugin>
@@ -146,7 +135,6 @@
                     <source>8</source>
                     <target>8</target>
                 </configuration>
-
             </plugin>
         </plugins>
     </build>
