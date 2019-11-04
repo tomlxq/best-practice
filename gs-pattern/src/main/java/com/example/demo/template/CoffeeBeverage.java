@@ -6,14 +6,19 @@ package com.example.demo.template;
  * @author TomLuo
  * @date 2019/8/25
  */
-public class Coffee extends Bevegrage {
+public class CoffeeBeverage extends Beverage {
     @Override
-    protected void putIngredients() {
+    protected void addCondiments() {
         System.out.println("放入辅料：牛奶和糖");
     }
 
     @Override
-    protected void putMeterial() {
+    protected void brew() {
         System.out.println("放入coffee");
+    }
+
+    @Override
+    public boolean wantAddCondiments() {
+        return false;
     }
 }

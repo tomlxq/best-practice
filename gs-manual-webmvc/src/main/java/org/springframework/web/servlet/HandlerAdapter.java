@@ -1,6 +1,5 @@
 package org.springframework.web.servlet;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,10 +20,7 @@ import java.util.Map;
 public class HandlerAdapter {
     Map<String, Integer> paramTypes;
     HandlerMapping handler;
-    /*public HandlerAdapter(HandlerMapping handler, Map<String, Integer> paramTypes) {
-        this.paramTypes = paramTypes;
-        this.handler=handler;
-    }*/
+
 
     public ModelAndView handle(HttpServletRequest req, HttpServletResponse resp, HandlerExecutionChain handler) {
         Class<?>[] parameterTypes = handler.getMethod().getParameterTypes();
