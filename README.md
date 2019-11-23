@@ -1,3 +1,3 @@
-# 内功心法
-## Java基础
-## Spring 设计模式
+# JAVA内功心法
+## gs-pattern
+介绍23种设计模式

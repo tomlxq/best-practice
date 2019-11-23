@@ -1,7 +1,7 @@
 package org.springframework.web.servlet;
 
 
-import com.sun.org.apache.xerces.internal.dom.DeferredElementNSImpl;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.annotation.Autowired;
 import org.springframework.web.annotation.Controller;
@@ -51,11 +51,12 @@ public class ApplicationContext {
             Element documentElement = expected.getDocumentElement();
             NodeList elementsByTagName = documentElement.getElementsByTagName("context:component-scan");
             Node item = elementsByTagName.item(0);
-            String packagePath = ((DeferredElementNSImpl) item).getAttribute("base-package");
+
+            String packagePath = (String) item.getUserData("base-package");
 
             NodeList elementsByTagName2 = documentElement.getElementsByTagName("context:property-placeholder");
             Node item2 = elementsByTagName2.item(0);
-            this.templatePath = ((DeferredElementNSImpl) item2).getAttribute("location");
+            this.templatePath = (String) item2.getUserData("location");
 
             //3. 注册 把所有的class找出来存起来
             doRegister(packagePath);

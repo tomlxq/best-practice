@@ -25,23 +25,14 @@ public class MainTest {
     }
 
     public static void main(String[] args) {
-        System.out.println("~~~~~~~~~~~~~~~~~~没有使用绳量模式~~~~~~~~~~~~~~~~~~");
+        System.out.println("~~~~~~~~~~~~~~~~~~使用绳量模式~~~~~~~~~~~~~~~~~~");
         long begin = System.currentTimeMillis();
         showMemory(begin);
         begin = System.currentTimeMillis();
-        TreeTest treeTest = new TreeTest();
+        PlantManager treeTest = new PlantManager();
         showMemory(begin);
         begin = System.currentTimeMillis();
-        treeTest.display();
-        showMemory(begin);
-        System.out.println("~~~~~~~~~~~~~~~~~~使用绳量模式~~~~~~~~~~~~~~~~~~");
-        begin = System.currentTimeMillis();
-        showMemory(begin);
-        begin = System.currentTimeMillis();
-        TreeManager treeManager = new TreeManager();
-        showMemory(begin);
-        begin = System.currentTimeMillis();
-        treeManager.display();
+        treeTest.displayPlants();
         showMemory(begin);
     }
 }
