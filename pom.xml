@@ -27,6 +27,7 @@
         <module>gs-manual-webmvc</module>
         <module>java-distribute</module>
         <module>java-distribute-cfx</module>
+        <module>java-distribute-zookeeper</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
