@@ -25,6 +25,8 @@
         <module>gs-transaction</module>
         <module>gs-common-webmvc</module>
         <module>gs-manual-webmvc</module>
+        <module>java-distribute</module>
+        <module>java-distribute-cfx</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
