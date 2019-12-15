@@ -17,7 +17,6 @@ import static com.tom.Constant.CONNECT;
  */
 public class ZooKeeperClient {
     private static final int SESSION_TIMEOUT = 5000;
-
     public static ZooKeeper getInstance() throws IOException, InterruptedException {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         ZooKeeper zooKeeper = new ZooKeeper(CONNECT, SESSION_TIMEOUT, new Watcher() {
@@ -31,5 +30,4 @@ public class ZooKeeperClient {
         countDownLatch.await();
         return zooKeeper;
     }
-
 }

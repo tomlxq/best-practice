@@ -37,8 +37,6 @@ public class DistributeLock {
         this.instance = ZooKeeperClient.getInstance();
         this.sessionTimeout = instance.getSessionTimeout();
         this.countDownLatch = new CountDownLatch(1);
-
-
     }
 
 

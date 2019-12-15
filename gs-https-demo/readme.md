@@ -208,3 +208,10 @@ public TomcatServletWebServerFactory servletContainer() {
 * Spring Boot 使用SSL-HTTPS 
 
   https://zhuanlan.zhihu.com/p/31385073
+
+* How to enable communication over https between 2 spring boot  applications using self signed certificate
+
+    http://www.littlebigextra.com/how-to-enable-communication-over-https-between-2-spring-boot-applications-using-self-signed-certificate/
+* https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html
+
+https://www.cnblogs.com/sparkdev/p/10369313.html
