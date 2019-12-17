@@ -201,6 +201,8 @@ public TomcatServletWebServerFactory servletContainer() {
 
 ## References：
 
+* https://myssl.com/csr_create.html
+
 * How to enable HTTPS in a Spring Boot Java application
 
     https://www.thomasvitale.com/https-spring-boot-ssl-certificate/
@@ -212,6 +214,11 @@ public TomcatServletWebServerFactory servletContainer() {
 * How to enable communication over https between 2 spring boot  applications using self signed certificate
 
     http://www.littlebigextra.com/how-to-enable-communication-over-https-between-2-spring-boot-applications-using-self-signed-certificate/
+    
 * https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html
 
-https://www.cnblogs.com/sparkdev/p/10369313.html
+* https://www.cnblogs.com/sparkdev/p/10369313.html
+
+* OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation
+
+    https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html
