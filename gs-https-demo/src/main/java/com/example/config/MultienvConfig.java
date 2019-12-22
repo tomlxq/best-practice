@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
  * @date 2019/12/19
  */
 @Component
-@ConfigurationProperties(prefix = "server")
+@ConfigurationProperties(prefix = "springstudy")
 @Setter
 @Getter
 public class MultienvConfig {
-    private int port;
+    private String domain;
 }

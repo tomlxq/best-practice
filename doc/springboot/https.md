@@ -656,6 +656,73 @@ server.ssl.enabled-protocols=TLSv1.2,TLSv1.1,TLSv1
 `curl --cacert cacert.pem https://www.tom.com:8443`
 ` curl https://www.tom.com:8443 -k`
 
+### pks转换为cer
+
+```bash
+openssl pkcs12 -in Server_wc.p12 -out Server_wc.crt -nokeys -openssl x509 -inform pem -in Server_wc.crt -outform der -out Server_wc.cer
+```
+
+## Issuers
+
+### 1. curl: (51) Unable to communicate securely with peer: requested domain name does not match the server's certificate.报错
+
+   解决办法：
+
+   You can use the domain name as usual but override the resolver like so:
+
+    curl -v --resolve subdomain.example.com:443:x.x.x.x https://subdomain.example.com/
+It might be awkward to maintain a lot of such mappings though. You might prefer to just ignore the cert 	mismatch:
+
+ `curl --insecure https://subdomain.example.com/`
+
+### 2. pwgen安装
+
+```bash
+mkdir -p /opt/tools
+scp root@192.168.238.150:/opt/tools/pwgen-2.08.tar.gz /opt/tools/
+tar -zxvf pwgen-2.08.tar.gz 
+cd pwgen-2.08
+./configure
+make
+make install
+```
+
+### 3. spring boot 使用spring.profiles.active来分区配置
+
+`java -jar https-demo.jar --spring.profiles.active=tom`
+
+`application.properties`
+
+```properties
+# Define a custom port instead of the default 8080
+http.port=8080
+# Define a custom port instead of the default 8080
+server.port=8443
+```
+
+`application-tom.properties`
+
+```properties
+# Tell Spring Security (if used) to require requests over HTTPS
+# The format used for the keystore
+server.ssl.key-store-type=PKCS12
+# The path to the keystore containing the certificate
+server.ssl.key-store=classpath:keystore/Server_wc.p12
+# The password used to generate the certificate
+server.ssl.key-store-password=4zFhYW7mdY
+# The alias mapped to the certificate
+server.ssl.key-alias=Server
+#enable/diable https
+server.ssl.enabled=true
+#ssl ciphers
+server.ssl.ciphers=TLS_RSA_WITH_AES_128_CBC_SHA256, ADD_OTHER_CIPHERS_IF_REQUIRED,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+# SSL protocol to use.
+server.ssl.protocol=TLS
+# Enabled SSL protocols.
+server.ssl.enabled-protocols=TLSv1.2,TLSv1.1,TLSv1
+springstudy.domain=www.tom.com
+```
+
 ## 参考文档：
 
 * Generating X.509 Certificates
@@ -675,5 +742,13 @@ server.ssl.enabled-protocols=TLSv1.2,TLSv1.1,TLSv1
 
 一些前辈的博文，也对我快速定位问题提供了很大的帮助，在此表示感谢！并列举如下：
 * 博客园 - rusty，《Openssl使用生成CA总结》 ，提到了需要提前建好一些目录和文件
+
 * 百度空间 - mars208，《使用openssl创建CA》，提到了签发策略的问题
+
 * ChinaUnix - ehyyngp，《使用openssl签发证书》，提到了中级证书的签发问题
+
+*  [P12,JKS,CER,RFX,PEM转换速记](https://www.cnblogs.com/cherrychen-cakuta/p/8028020.html)
+
+* 证书格式转换
+
+  https://myssl.com/cert_convert.html
