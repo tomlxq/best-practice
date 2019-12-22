@@ -1,5 +1,90 @@
 # gs-https-demo
 
+## 什么是SSL?
+
+SSL(Secure Sockets Layer [安全套接层](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%AE%89%E5%85%A8%E5%A5%97%E6%8E%A5%E5%B1%82)),及其继任者[传输层安全](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E4%BC%A0%E8%BE%93%E5%B1%82%E5%AE%89%E5%85%A8)（Transport Layer Security，TLS）是为[网络通信](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1)提供安全及[数据完整性](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7)的一种安全协议。TLS与SSL在[传输层](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E4%BC%A0%E8%BE%93%E5%B1%82)对网络连接进行加密。
+
+SSL协议位于[TCP/IP协议](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/TCP%2FIP%E5%8D%8F%E8%AE%AE)与各种[应用层](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82)协议之间，为[数据通讯](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%AE%AF)提供安全支持。SSL协议可分为两层： SSL记录协议（SSL Record Protocol）：它建立在可靠的[传输协议](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE)（如TCP）之上，为高层协议提供[数据封装](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85)、压缩、加密等基本功能的支持。 SSL[握手协议](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E6%8F%A1%E6%89%8B%E5%8D%8F%E8%AE%AE)（SSL Handshake Protocol）：它建立在SSL记录协议之上，用于在实际的数据传输开始前，通讯双方进行[身份认证](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81)、协商[加密算法](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95)、交换加密[密钥](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%AF%86%E9%92%A5)等。
+
+
+
+ ### 提供服务
+
+1）认证用户和服务器，确保数据发送到正确的[客户机](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%AE%A2%E6%88%B7%E6%9C%BA)和[服务器](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E6%9C%8D%E5%8A%A1%E5%99%A8)；
+
+2）加密数据以防止数据中途被窃取；
+
+3）维护数据的完整性，确保数据在传输过程中不被改变。
+
+## 什么是HTTPS?
+
+HTTPS（**Hypertext Transfer Protocol Secure**）[安全超文本传输协议](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%AE%89%E5%85%A8%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE)
+
+它是由Netscape开发并内置于其[浏览器](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E6%B5%8F%E8%A7%88%E5%99%A8)中，用于对数据进行压缩和解压操作，并返回网络上传送回的结果。HTTPS实际上应用了Netscape的完全[套接字](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%A5%97%E6%8E%A5%E5%AD%97)层（SSL）作为HTTP[应用层](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82)的子层。（HTTPS使用端口443，而不是象HTTP那样使用端口80来和TCP/IP进行通信。）SSL使用40 位关键字作为RC4流[加密算法](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95)，这对于商业信息的加密是合适的。HTTPS和SSL支持使用X.509[数字认证](https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%E6%95%B0%E5%AD%97%E8%AE%A4%E8%AF%81)，如果需要的话用户可以确认发送者是谁。
+
+**HTTPS与SSL的关系？**
+
+HTTPS与SSL的关系是包含与被包含的关系，简单来说，HTTPS=HTTP+SSL。也就是说HTTPS是在HTTP上面加了一层SSL协议，在HTTP站点上部署SSL数字证书就变成了HTTPS。
+
+根据HTTPS与SSL的含义可以看出：SSL在HTTPS协议栈中负责实现上面提到的加密层。
+
+## Spring Boot中使用HTTPS步骤
+
+（1）要有一个SSL证书，证书怎么获取呢？买（通过证书授权机构购买）或者自己生成（通过keytool生成）。
+
+（2）在spring boot中启用HTTPS
+
+（3）将HTTP重定向到HTTPS（可选）
+
+`keytool -genkey -alias tom -dname "CN=www.tom.com,OU=IT Dept,O=Huawei,L=GuangDong,ST=ShenZhen,C=CN" -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 365`
+
+这里解释下命令的各个参数的含义：
+
+-genkey ：生成key；
+
+-alias ：key的别名；
+
+-dname：指定证书拥有者信息
+
+-storetype ：密钥库的类型为JCEKS。常用的有JKS(默认),JCEKS(推荐),PKCS12,BKS,UBER。每个密钥库只可以是其中一种类型。
+
+-keyalg ：DSA或RSA算法(当使用-genkeypair参数)，DES或DESede或AES算法(当使用-genseckey参数)；
+
+-keysize ：密钥的长度为512至1024之间(64的倍数)
+
+-keystore ：证书库的名称
+
+-validity ： 指定创建的证书有效期多少天
+
+dname的值详解： 
+
+CN(Common Name名字与姓氏) 
+
+OU(Organization Unit组织单位名称) 
+
+O(Organization组织名称) 
+
+L(Locality城市或区域名称) 
+
+ST(State州或省份名称) 
+
+C(Country国家名称） 
+
+在application.properties中配置HTTPS，配置信息如下：
+
+```properties
+#https端口号.
+server.port: 443
+#证书的路径.
+server.ssl.key-store: classpath:keystore.p12
+#证书密码，请修改为您自己证书的密码.
+server.ssl.key-store-password: 123456
+#秘钥库类型
+server.ssl.keyStoreType: PKCS12
+#证书别名
+server.ssl.keyAlias: tom
+```
+
 ## spring boot依赖包方式 
 
 ### parent
