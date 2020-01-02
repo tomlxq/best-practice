@@ -1,12 +1,15 @@
 
 
+# HTTPS实践
 ## https相关知识
-
 ### CA是什么
 CA（Certificate Authority）证书颁发机构主要负责证书的颁发、管理以及归档和吊销。证书内包含了拥有证书者的姓名、地址、电子邮件帐号、公钥、证书有效期、发放证书的CA、CA的数字签名等信息。证书主要有三大功能：加密、签名、身份验证。
 
-### 相关命令含义解析
+Openssl是Linux下的基础安全工具
 
+
+
+### 相关命令含义解析
 #### 生成自签名根证书（即顶级CA）
 
 ##### 命令选项和参数解读
@@ -752,3 +755,12 @@ springstudy.domain=www.tom.com
 * 证书格式转换
 
   https://myssl.com/cert_convert.html
+  
+* 使用openssl生成多级证书
+
+  [http://mowblog.com/%e4%bd%bf%e7%94%a8openssl%e7%94%9f%e6%88%90%e5%a4%9a%e7%ba%a7%e8%af%81%e4%b9%a6/](http://mowblog.com/使用openssl生成多级证书/)
+  
+* OpenSSL 创建私有 CA 三部曲
+
+  https://www.cnblogs.com/sparkdev/p/10369313.html
+

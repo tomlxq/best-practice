@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans default-autowire="byName"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans">
+    <context:annotation-config/>
+    <context:component-scan base-package="com.tom.service"/>
+    <!-- provider's application name, used for tracing dependency relationship -->
+    <dubbo:application name="order-provider" owner="tom"/>
+    <!-- use multicast registry center to export service -->
+    <!-- <dubbo:registry address="zookeeper://192.168.238.150:2181?backup=192.168.238.155:2181,192.168.238.160:2181,192.168.238.165:2181"/>-->
+    <dubbo:registry protocol="zookeeper"
+                    address="192.168.238.150:2181,192.168.238.155:2181,192.168.238.160:2181,192.168.238.165:2181"/>
+    <dubbo:service interface="com.tom.service.OrderService" ref="orderService"/>
+</beans>
