@@ -12,7 +12,7 @@
 
     <context:annotation-config/>
 
-    <dubbo:reference id="orderServices"
+    <dubbo:reference id="userServices"
                      interface="com.tom.service.UserService"
                      protocol="dubbo">
     </dubbo:reference>

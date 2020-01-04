@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+
+
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       default-autowire="byName">
+
+    <dubbo:application name="gs-dubbo-webiste"/>
+    <dubbo:registry protocol="zookeeper" file="/tmp/gs.website.cache" group="dubbo-dev"
+                    address="192.168.238.150:2181,192.168.238.155:2181,192.168.238.160:2181,192.168.238.165:2181"/>
+
+    <import resource="classpath*:META-INF/client/order-customer.xml"/>
+    <import resource="classpath*:META-INF/client/user-customer.xml"/>
+
+</beans>

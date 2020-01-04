@@ -3,6 +3,8 @@ package com.tom.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 功能描述
  *
@@ -11,10 +13,12 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class DoOrderResponse {
-    public DoOrderResponse( String code,String desc){
-        this.code=code;
-        this.desc=desc;
+public class DoOrderResponse implements Serializable {
+    private static final long serialVersionUID = 4038461615509714712L;
+
+    public DoOrderResponse(String code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
     private String code;
     private String desc;

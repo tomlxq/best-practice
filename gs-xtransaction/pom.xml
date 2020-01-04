@@ -12,6 +12,7 @@
         <module>order-provider</module>
         <module>user-api</module>
         <module>user-provider</module>
+        <module>gs-site</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -131,7 +132,7 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version> 8.0.18</version>
+                <version>8.0.18</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis</groupId>

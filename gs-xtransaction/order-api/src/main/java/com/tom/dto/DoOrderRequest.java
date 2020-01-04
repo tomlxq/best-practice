@@ -1,6 +1,10 @@
 package com.tom.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * 功能描述
@@ -9,6 +13,9 @@ import lombok.Data;
  * @date 2020/1/1
  */
 @Data
-public class DoOrderRequest {
+@NoArgsConstructor
+@AllArgsConstructor
+public class DoOrderRequest implements Serializable {
+    private static final long serialVersionUID = 6777309018108990724L;
     private String name;
 }

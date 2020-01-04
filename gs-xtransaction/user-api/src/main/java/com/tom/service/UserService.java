@@ -2,6 +2,8 @@ package com.tom.service;
 
 import com.tom.dto.LoginRequest;
 import com.tom.dto.LoginResponse;
+import com.tom.dto.RechargeReq;
+import com.tom.dto.RechargeRes;
 
 /**
  * 功能描述
@@ -11,4 +13,6 @@ import com.tom.dto.LoginResponse;
  */
 public interface UserService {
     LoginResponse login(LoginRequest loginRequest);
+
+    RechargeRes recharge(RechargeReq rechargeReq);
 }

@@ -11,7 +11,4 @@
     <!--服务发布的配置，需要暴露的服务接口-->
     <dubbo:service interface="com.tom.service.OrderService" ref="orderService"
                    protocol="dubbo" timeout="3000"/>
-
-
-
 </beans>
