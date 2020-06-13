@@ -763,4 +763,18 @@ springstudy.domain=www.tom.com
 * OpenSSL 创建私有 CA 三部曲
 
   https://www.cnblogs.com/sparkdev/p/10369313.html
+  
+* OpenSSL Certificate Authority
+  
+  https://jamielinux.com/docs/openssl-certificate-authority/index.html
+  
+* OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation
+
+  [https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html](https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL and_revocation.html)
+
+* Java 2-way TLS/SSL (Client Certificates) and PKCS12 vs JKS KeyStores
+
+  http://blog.palominolabs.com/2011/10/18/java-2-way-tlsssl-client-certificates-and-pkcs12-vs-jks-keystores/
+
+* 
 

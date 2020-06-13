@@ -41,3 +41,7 @@ Thumbs.db
 .gradle/
 *.versionsBackup
 
+/person
+/tmlog.lck
+/User
+/60
