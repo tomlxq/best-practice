@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration
+        packages="com.tom" status="WARN">
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
+        </Console>
+        <File name="fout" fileName="target/tom.log" append="true">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%nw</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.tom.log4j2" level="debug">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+        <AsyncRoot level="ERROR">
+            <AppenderRef ref="stdout"/>
+            <AppenderRef ref="fout"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>
