@@ -45,3 +45,6 @@ Thumbs.db
 /tmlog.lck
 /User
 /60
+/*/.mvn/wrapper/
+/*/mvnw
+/*/mvnw.cmd
