@@ -8,18 +8,23 @@ Maven默认约定了一套目录结构，在通过Maven创建了项目以后，�
 
 ```text
 ${basedir}
-        |-- pom.xml
-        |-- src
-            | |-- main
-                | | -- java
-                        || com.xxx.xxx 项目源码
-                | | `-- resources
-                        || 项目配置文件 .xml等
-               | | `-- filters
-           | | `-- test
-                | | `-- java
-                | | `-- resources
-               | | `-- filters
+src
+  -main
+      –bin 脚本库
+      –java java源代码文件
+      –resources 资源库，会自动复制到classes目录里
+      –filters 资源过滤文件
+      –assembly 组件的描述配置（如何打包）
+      –config 配置文件
+      –webapp web应用的目录。WEB-INF、css、js等
+  -test
+      –java 单元测试java源代码文件
+      –resources 测试需要用的资源库
+      –filters 测试资源过滤库
+  -site Site（一些文档）
+target
+LICENSE.txt Project’s license
+README.txt Project’s readme
 ```
 
 在使用maven来创建的项目，默认会自动创建src/main/等级别的结构。其中各个目录所存放的内容如下：
