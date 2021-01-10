@@ -83,7 +83,7 @@ public class StudentMapperTest {
         System.out.println("studentMapper读取数据: " + studentMapper.getStudentById(1));
         System.out.println("studentMapper读取数据: " + studentMapper.getStudentById(1));
         System.out.println("studentMapper2更新了" + studentMapper2.updateStudentName("小岑", 1) + "个学生的数据");
-        System.out.println("studentMapper读取数据: " + studentMapper.getStudentById(1));
+        System.out.println("studentMapper读取数据(脏数据): " + studentMapper.getStudentById(1));
         System.out.println("studentMapper2读取数据: " + studentMapper2.getStudentById(1));
 
     }
@@ -169,7 +169,7 @@ public class StudentMapperTest {
      * @throws Exception
      */
     @Test
-    public void testCacheWithDiffererntNamespace() throws Exception {
+    public void testCacheWithDifferentNamespace() throws Exception {
         SqlSession sqlSession1 = factory.openSession(true); // 自动提交事务
         SqlSession sqlSession2 = factory.openSession(true); // 自动提交事务
         SqlSession sqlSession3 = factory.openSession(true); // 自动提交事务
@@ -198,7 +198,7 @@ public class StudentMapperTest {
      * @throws Exception
      */
     @Test
-    public void testCacheWithDiffererntNamespaceWithCacheRef() throws Exception {
+    public void testCacheWithDifferentNamespaceWithCacheRef() throws Exception {
         SqlSession sqlSession1 = factory.openSession(true); // 自动提交事务
         SqlSession sqlSession2 = factory.openSession(true); // 自动提交事务
         SqlSession sqlSession3 = factory.openSession(true); // 自动提交事务
