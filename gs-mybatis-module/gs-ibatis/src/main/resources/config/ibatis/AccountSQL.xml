@@ -3,19 +3,19 @@
         PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
-     <!--   二元条件
-        isEqual
-        isgreaterThan
-        isLessThan
-        一元条件
-        isPropertyAvailale
-        isnull
-        isEmpty collection的size()，String的valueof()
-        其他
-        isparameterpresent
-        iterate
-        简单的动态SQL
-        $$-->
+<!--   二元条件
+   isEqual
+   isgreaterThan
+   isLessThan
+   一元条件
+   isPropertyAvailale
+   isnull
+   isEmpty collection的size()，String的valueof()
+   其他
+   isparameterpresent
+   iterate
+   简单的动态SQL
+   $$-->
 <sqlMap namespace="AccountSQL">
     <typeAlias alias="account" type="com.example.entities.Account"/>
     <insert id="insertAccount" parameterClass="account">
@@ -27,12 +27,18 @@
         </selectKey>
     </insert>
     <delete id="deleteAccount" parameterClass="account">
-    delete from accounts where id=#id#
-</delete>
+        delete
+        from accounts
+        where id = #id#
+    </delete>
     <update id="updateAccount" parameterClass="account">
-        update accounts set name=#name#,password=#password#,email=#email#,sex=#sex#,
-        birthday=#birthday#
-        where id=#id#
+        update accounts
+        set name=#name#,
+            password=#password#,
+            email=#email#,
+            sex=#sex#,
+            birthday=#birthday#
+        where id = #id#
     </update>
     <select id="queryOneAccount" resultClass="account" parameterClass="account">
         select * from accounts
@@ -53,15 +59,15 @@
         SELECT * FROM accounts
         <dynamic prepend="where">
 
-                <isNotEmpty prepend="and" property="account.id">
-                    (id=#account.id#)
-                </isNotEmpty>
-                <isNotEmpty prepend="and" property="account.name">
-                    (name=#account.name#)
-                </isNotEmpty>
-                <isNotEmpty prepend="and" property="account.sex">
-                    (sex=#account.sex#)
-                </isNotEmpty>
+            <isNotEmpty prepend="and" property="account.id">
+                (id=#account.id#)
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="account.name">
+                (name=#account.name#)
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="account.sex">
+                (sex=#account.sex#)
+            </isNotEmpty>
 
             <isNotEmpty property="nameList">
                 <iterate prepend="AND" property="nameList"

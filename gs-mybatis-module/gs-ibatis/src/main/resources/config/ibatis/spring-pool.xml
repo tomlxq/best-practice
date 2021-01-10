@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
@@ -42,7 +42,7 @@
     <!--  配置参与事务的类 -->
     <aop:config>
         <aop:pointcut id="allServiceMethod" expression="execution(* com.example.service.*.*(..))"/>
-        <aop:advisor pointcut-ref="allServiceMethod" advice-ref="transAdvice" />
+        <aop:advisor pointcut-ref="allServiceMethod" advice-ref="transAdvice"/>
     </aop:config>
     <!-- Spring bean configuration. Tell Spring to bounce off BoneCP -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
@@ -50,26 +50,26 @@
     </bean>
     <!-- BoneCP配置 -->
     <bean id="bonecp" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
-        <property name="driverClass" value="${spring.datasource.driverClassName}" />
-        <property name="jdbcUrl" value="${spring.datasource.url}" />
-        <property name="username" value="${spring.datasource.username}" />
-        <property name="password" value="${spring.datasource.password}" />
+        <property name="driverClass" value="${spring.datasource.driverClassName}"/>
+        <property name="jdbcUrl" value="${spring.datasource.url}"/>
+        <property name="username" value="${spring.datasource.username}"/>
+        <property name="password" value="${spring.datasource.password}"/>
         <!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->
-        <property name="idleConnectionTestPeriodInMinutes" value="60" />
+        <property name="idleConnectionTestPeriodInMinutes" value="60"/>
         <!-- 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 -->
-        <property name="idleMaxAgeInMinutes" value="30" />
+        <property name="idleMaxAgeInMinutes" value="30"/>
         <!-- 每个分区最大的连接数 -->
-        <property name="maxConnectionsPerPartition" value="60" />
+        <property name="maxConnectionsPerPartition" value="60"/>
         <!-- 每个分区最小的连接数 -->
-        <property name="minConnectionsPerPartition" value="10" />
+        <property name="minConnectionsPerPartition" value="10"/>
         <!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定 -->
-        <property name="partitionCount" value="3" />
+        <property name="partitionCount" value="3"/>
         <!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
-        <property name="acquireIncrement" value="5" />
+        <property name="acquireIncrement" value="5"/>
         <!-- 缓存prepared statements的大小，默认值：0 -->
-        <property name="statementsCacheSize" value="100" />
+        <property name="statementsCacheSize" value="100"/>
         <!-- 每个分区释放链接助理进程的数量，默认值：3，除非你的一个数据库连接的时间内做了很多工作，不然过多的助理进程会影响你的性能 -->
-        <property name="releaseHelperThreads" value="3" />
+        <property name="releaseHelperThreads" value="3"/>
     </bean>
     <!--   通常来说，只需要修改initialSize、minIdle、maxActive。
        如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。
@@ -79,37 +79,36 @@
         <!-- 基本属性 url、user、password -->
 
 
-      <!--  <property name="driverClass" value="${spring.datasource.driverClassName}" />-->
-        <property name="url" value="${spring.datasource.url}" />
-        <property name="username" value="${spring.datasource.username}" />
-        <property name="password" value="${spring.datasource.password}" />
+        <!--  <property name="driverClass" value="${spring.datasource.driverClassName}" />-->
+        <property name="url" value="${spring.datasource.url}"/>
+        <property name="username" value="${spring.datasource.username}"/>
+        <property name="password" value="${spring.datasource.password}"/>
         <!-- 配置初始化大小、最小、最大 -->
-        <property name="initialSize" value="1" />
-        <property name="minIdle" value="1" />
-        <property name="maxActive" value="20" />
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="20"/>
 
         <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="60000" />
+        <property name="maxWait" value="60000"/>
 
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
 
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
 
-        <property name="validationQuery" value="SELECT 'x'" />
-        <property name="testWhileIdle" value="true" />
-        <property name="testOnBorrow" value="false" />
-        <property name="testOnReturn" value="false" />
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
 
         <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
-        <property name="poolPreparedStatements" value="false" />
-        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <property name="poolPreparedStatements" value="false"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
 
         <!-- 配置监控统计拦截的filters -->
-        <property name="filters" value="stat" />
+        <property name="filters" value="stat"/>
     </bean>
-
 
 
 </beans>

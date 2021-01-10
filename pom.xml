@@ -11,6 +11,7 @@
     <modules>
         <module>gs-log</module>
         <module>gs-junit/gs-maven-surefire-plugin</module>
+        <module>gs-mybatis-module/mybatis-cache-demo</module>
         <!--<module>gs-zero-mvc</module>
         <module>gs-js</module>
         <module>gs-ibatis</module>
