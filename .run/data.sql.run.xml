@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="data.sql" type="DatabaseScript" editBeforeRun="true" singleton="false" nameIsGenerated="true">
+    <script-file value="$PROJECT_DIR$/gs-spring-boot-mybatis-plus/src/main/resources/sql/data.sql" />
+    <script-mode>FILE</script-mode>
+    <data-source id="fb6746ee-0c64-4925-8eb0-ab62993da1b6" namespace="schema/&quot;demo&quot;" />
+    <method v="2" />
+  </configuration>
+</component>

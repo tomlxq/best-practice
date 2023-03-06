@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #mysql 8 需要配置时区，不然会出现启动报错的情况   serverTimezone=GMT%2B8
+    #url: jdbc:mysql://localhost:3306/demo?serverTimezone=GMT%2B8&useSSL=true&useUnicode=true&characterEncoding=utf8
+    #username: root
+    #password: root
+
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://192.168.238.150:3306/demo?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+#配置日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#配置逻辑删除  1 删除  0 未删除
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0

@@ -1,0 +1,19 @@
+# 生产环境
+
+# 数据源
+spring:
+  datasource:
+    #username: root
+    #password: root
+
+    # 加密数据
+    username: mpw:vSwP+pBG9qRixd7SwbqFuA==
+    password: mpw:vSwP+pBG9qRixd7SwbqFuA==
+
+    #url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    #driver-class-name:  com.mysql.cj.jdbc.Driver
+
+    # 数据库安全
+    url: mpw:TYuayKk9wHLr8FBgCYLn/EN9ggtnQrpcUsr095B4tA9fnWyTy/w2Nr6CS3uuHslhupT0FXvq2abgXVX8i0GxIYYPVNF2uK0Cp/AeTevgA6Y/vNOoJOyWJXxfLHFykGbS+Ps57PUgNhUNnxe6p0RNew==
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    type: com.alibaba.druid.pool.DruidDataSource
