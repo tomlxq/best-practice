@@ -1,0 +1,5 @@
+server:
+  port: 8826
+logging:
+  config:
+    classpath: logback-spring.xml
