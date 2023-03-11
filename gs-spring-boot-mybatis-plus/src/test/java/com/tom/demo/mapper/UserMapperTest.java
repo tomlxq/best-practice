@@ -3,23 +3,19 @@ package com.tom.demo.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.tom.demo.User;
-import junit.framework.TestCase;
-import org.junit.Test;
+import com.tom.demo.pojo.User;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * UserMapperTest
- *
- * @author TomLuo
- * @date 2023年03月05日 18:04
- */
-public class UserMapperTest extends TestCase {
+//@RunWith(SpringRunner.class)
+@SpringBootTest
+public class UserMapperTest {
     @Autowired
     private UserMapper userMapper;
 
@@ -90,11 +86,11 @@ public class UserMapperTest extends TestCase {
      * 分页查询
      */
     @Test
-    public void PageTest(){
+    public void PageTest() {
         //参数一：当前页
         //参数二：页的大小
         //使用了分页插件之后，所有的分页操作也变得简单！
-        Page<User> page = new Page<>(1,5);
+        Page<User> page = new Page<>(1, 5);
 
         IPage<User> pages = userMapper.selectPage(page, null);
         pages.getRecords().forEach(System.out::println);
@@ -105,7 +101,7 @@ public class UserMapperTest extends TestCase {
      * 删除操作
      */
     @Test
-    public void deletTest(){
+    public void deletTest() {
         userMapper.deleteById(1398260764485095426L);
     }
 
@@ -113,13 +109,14 @@ public class UserMapperTest extends TestCase {
      * 批量删除
      */
     @Test
-    public void deletBatchTest(){
-        userMapper.deleteBatchIds(Arrays.asList(1398201429172178946L,5));
+    public void deletBatchTest() {
+        userMapper.deleteBatchIds(Arrays.asList(1398201429172178946L, 5));
     }
+
     @Test
-    public void deletByMap(){
+    public void deletByMap() {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("name","我想创建公众号");
+        map.put("name", "我想创建公众号");
         userMapper.deleteByMap(map);
     }
 
@@ -127,7 +124,7 @@ public class UserMapperTest extends TestCase {
      * 逻辑删操作
      */
     @Test
-    public void deleteLogic(){
+    public void deleteLogic() {
         int i = userMapper.deleteById(1L);
         System.out.println(i);
     }
@@ -145,57 +142,61 @@ public class UserMapperTest extends TestCase {
      * 条件构造器
      */
     @Test
-    public void wapperTest(){
+    public void wapperTest() {
         //查询name不为空的用户，并且邮箱不为空的用户，年龄大于12
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
         wrapper
                 .isNotNull("name")
                 .isNotNull("email")
-                .ge("age",12);
+                .ge("age", 12);
         userMapper.selectList(wrapper).forEach(System.out::println);
 
     }
 
     @Test
-    void test2(){
+    void test2() {
         //查询名字为五毛
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("name","派大星");
+        wrapper.eq("name", "派大星");
         User user = userMapper.selectOne(wrapper);
         System.out.println(user);
     }
+
     @Test
-    void test3(){
+    void test3() {
         //查询年龄在16-30岁之间的用户
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
-        wrapper.between("age",16,30);
-        Integer count = userMapper.selectCount(wrapper);
+        wrapper.between("age", 16, 30);
+        Long count = userMapper.selectCount(wrapper);
         System.out.println(count);
     }
+
     //模糊查询
     @Test
-    void test4(){
+    void test4() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         //左和右  是指通配符在左边还是右边 t%
-        wrapper.notLike("name","l")
-                .likeRight("email","t");
+        wrapper.notLike("name", "l")
+                .likeRight("email", "t");
         List<Map<String, Object>> maps = userMapper.selectMaps(wrapper);
         maps.forEach(System.out::println);
     }
+
     @Test
-    void test5(){
+    void test5() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         // id 在子查询中查出来
-        wrapper.inSql("id","select id from user where id<3");
+        wrapper.inSql("id", "select id from user where id<3");
         List<Object> objects = userMapper.selectObjs(wrapper);
         objects.forEach(System.out::println);
 
     }
+
     //排序
     @Test
-    void test6(){
+    void test6() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
         wrapper.orderByDesc("id");

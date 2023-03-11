@@ -2,6 +2,7 @@ package com.tom.demo.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -12,7 +13,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author TomLuo
@@ -20,13 +21,13 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="User对象", description="")
+@ApiModel(value = "User对象", description = "")
 public class User extends Model<User> implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
     @ApiModelProperty(value = "主键ID")
-      @TableId(value = "id", type = IdType.ASSIGN_ID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     @ApiModelProperty(value = "姓名")

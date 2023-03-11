@@ -1,7 +1,8 @@
 package com.tom.demo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.tom.demo.User;
+import com.tom.demo.pojo.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Repository;
  * @author TomLuo
  * @date 2023年03月05日 18:03
  */
-@Repository
 public interface UserMapper extends BaseMapper<User> {
     /*所有的CRUD已经编写完成*/
 

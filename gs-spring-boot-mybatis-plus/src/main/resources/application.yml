@@ -1,20 +1,22 @@
 spring:
   datasource:
-    #driver-class-name: com.mysql.cj.jdbc.Driver
-    #mysql 8 需要配置时区，不然会出现启动报错的情况   serverTimezone=GMT%2B8
-    #url: jdbc:mysql://localhost:3306/demo?serverTimezone=GMT%2B8&useSSL=true&useUnicode=true&characterEncoding=utf8
-    #username: root
-    #password: root
-
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://192.168.238.150:3306/demo?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+#    url: jdbc:p6spy:mysql://192.168.238.150:3306/demo?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&serverTimeZone=GMT%2B8
+#    username: root
+#    password: root
+#    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+#    url: jdbc:mysql://192.168.238.150:3306/demo?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&serverTimeZone=GMT%2B8
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: mpw:KthY3GHXj9meEqk1S+5vip5kd+qPfyHg2AvJSDabl6pvOTT6ogL1kCGGJGRZdm7cxV7OeMrzH4MImP7MM2B/Trn2ND6zGysY5nvQ2KtPAb1yuedUGKTdVM8WLktKmulfTyEAh97ZpQhErt7zndaHRUF5qJzHpFhif3LicppRXyqg6S02TD++f+TYS0FZy6K+
+    username: mpw:WPKVTzF4/7WdPRznY3+Dcw==
+    password: mpw:WPKVTzF4/7WdPRznY3+Dcw==
 #配置日志
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#配置逻辑删除  1 删除  0 未删除
+  #配置逻辑删除  1 删除  0 未删除
   global-config:
     db-config:
       logic-delete-value: 1

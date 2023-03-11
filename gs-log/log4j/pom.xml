@@ -6,9 +6,7 @@
     <artifactId>gs-log</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <modules>
-        <module>logback</module>
-    </modules>
+
     <name>gs-log</name>
     <description>日志系统介绍</description>
     <properties>

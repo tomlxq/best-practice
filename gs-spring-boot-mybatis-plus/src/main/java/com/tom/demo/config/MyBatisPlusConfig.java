@@ -1,12 +1,7 @@
 package com.tom.demo.config;
 
-import com.baomidou.mybatisplus.core.injector.ISqlInjector;
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -17,22 +12,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @MapperScan("com.tom.demo")//扫描mapper文件夹
 @EnableTransactionManagement
-@Configuration//配置类
+@Configuration
 public class MyBatisPlusConfig  {
 
-    @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
-    }
-
-    /**
-     * 分页插件
-     * @return
-     */
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
-    }
+//    @Bean
+//    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+//        return new OptimisticLockerInterceptor();
+//    }
+//
+//    /**
+//     * 分页插件
+//     * @return
+//     */
+//    @Bean
+//    public PaginationInterceptor paginationInterceptor() {
+//        return new PaginationInterceptor();
+//    }
 
     /**
      * 逻辑删除组件
