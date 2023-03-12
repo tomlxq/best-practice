@@ -24,6 +24,8 @@ import java.time.LocalTime;
 @Slf4j
 public class RetryServiceImpl implements RetryService {
     /**
+     *
+     * 在需要重试的方法上增加注解 @Retryable，表示该方法需要重试
      * 注解中几个参数的含义：
      * <p>
      * value：抛出指定异常才会重试
