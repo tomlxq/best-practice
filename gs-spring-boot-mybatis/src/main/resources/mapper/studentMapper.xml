@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tom.mapper.StudentMapper">
+    <cache/>
+
+    <select id="getStudentById" parameterType="int" resultType="com.tom.entity.StudentEntity">
+        SELECT id, name, age
+        FROM student
+        WHERE id = #{id}
+    </select>
+
+    <select id="getStudentByIdWithClassInfo" parameterType="int" resultType="com.tom.entity.StudentEntity">
+        SELECT s.id, s.name, s.age, class.name as className
+        FROM classroom c
+                 JOIN student s ON c.student_id = s.id
+                 JOIN class ON c.class_id = class.id
+        WHERE s.id = #{id};
+    </select>
+
+    <insert id="addStudent" parameterType="com.tom.entity.StudentEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student(name, age)
+        VALUES (#{name}, #{age})
+    </insert>
+
+    <update id="updateStudentName">
+        UPDATE student
+        SET name = #{name}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 在insert语句中，在Oracle经常使用序列、在MySQL中使用函数来自动生成插入表的主键，
+    而且需要方法能返回这个生成主键。
+    使用myBatis的selectKey标签可以实现这个效果-->
+    <insert id="createStudentAutoKey" parameterType="com.tom.entity.StudentEntity" keyProperty="id">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select nextval('student')
+        </selectKey>
+        INSERT INTO student(ID,
+        NAME,
+        SEX,
+        BIRTHDAY,
+        PHOTO,
+        CLASS_ID,
+        PLACE_ID)
+        VALUES (#{id},
+        #{name},
+        #{sex},
+        #{birthday},
+        #{photo, javaType=byte[], jdbcType=BLOB, typeHandler=org.apache.ibatis.type.BlobTypeHandler},
+        #{classId},
+        #{placeId})
+    </insert>
+
+    <!-- 2 if(判断参数) - 将实体类不为空的属性作为where条件 -->
+    <select id="getStudentList_if" resultMap="resultMap_studentEntity" parameterType="com.tom.entity.StudentEntity">
+        SELECT ST.ID,
+        ST.NAME,
+        ST.SEX,
+        ST.BIRTHDAY,
+        ST.PHOTO,
+        ST.CLASS_ID,
+        ST.PLACE_ID
+        FROM student ST
+        <where>
+            <if test="name !=null ">
+                ST.NAME LIKE CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="sex != null and sex != '' ">
+                AND ST.SEX = #{sex, jdbcType=INTEGER}
+            </if>
+            <if test="birthday != null ">
+                AND ST.BIRTHDAY = #{birthday, jdbcType=DATE}
+            </if>
+            <if test="classId != null and classId!= '' ">
+                AND ST.CLASS_ID = #{classId, jdbcType=VARCHAR}
+            </if>
+            <if test="classEntity != null and classEntity.classId !=null and classEntity.classId !=' ' ">
+                AND ST.CLASS_ID = #{classEntity.classId, jdbcType=VARCHAR}
+            </if>
+            <if test="placeId != null and placeId != '' ">
+                AND ST.PLACE_ID = #{placeId, jdbcType=VARCHAR}
+            </if>
+            <if test="placeEntity != null and placeEntity.placeId != null and placeEntity.placeId != '' ">
+                AND ST.PLACE_ID = #{placeEntity.placeId, jdbcType=VARCHAR}
+            </if>
+            <if test="Id != null and Id != '' ">
+                AND ST.ID = #{Id, jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <!-- 4 if/set(判断参数) - 将实体类不为空的属性更新 -->
+    <update id="updateStudent_if_set" parameterType="com.tom.entity.StudentEntity">
+        UPDATE student
+        <set>
+            <if test="name != null and name != '' ">
+                NAME = #{name},
+            </if>
+            <if test="sex != null and sex != '' ">
+                SEX = #{sex},
+            </if>
+            <if test="birthday != null ">
+                BIRTHDAY = #{birthday},
+            </if>
+            <if test="photo != null ">
+                PHOTO = #{photo, javaType=byte[], jdbcType=BLOB, typeHandler=org.apache.ibatis.type.BlobTypeHandler},
+            </if>
+            <if test="classId != '' ">
+                CLASS_ID = #{classId}
+            </if>
+            <if test="placeId != '' ">
+                PLACE_ID = #{placeId}
+            </if>
+        </set>
+        WHERE ID = #{id};
+    </update>
+    <!-- 5.1if/trim代替where(判断参数) -将实体类不为空的属性作为where条件-->
+    <select id="getStudentList_if_trim" resultMap="resultMap_studentEntity">
+        SELECT ST.ID,
+        ST.NAME,
+        ST.SEX,
+        ST.BIRTHDAY,
+        ST.PHOTO,
+        ST.CLASS_ID,
+        ST.PLACE_ID
+        FROM student ST
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="name !=null ">
+                ST.NAME LIKE CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="sex != null and sex != '' ">
+                AND ST.SEX = #{sex, jdbcType=INTEGER}
+            </if>
+            <if test="birthday != null ">
+                AND ST.BIRTHDAY = #{birthday, jdbcType=DATE}
+            </if>
+            <if test="classId != null and classId!= '' ">
+                AND ST.CLASS_ID = #{classId, jdbcType=VARCHAR}
+            </if>
+            <if test="classEntity != null and classEntity.classId !=null and classEntity.classId !=' ' ">
+                AND ST.CLASS_ID = #{classEntity.classId, jdbcType=VARCHAR}
+            </if>
+            <if test="placeId != null and placeId != '' ">
+                AND ST.PLACE_ID = #{placeId, jdbcType=VARCHAR}
+            </if>
+            <if test="placeEntity != null and placeEntity.placeId != null and placeEntity.placeId != '' ">
+                AND ST.PLACE_ID = #{placeEntity.placeId, jdbcType=VARCHAR}
+            </if>
+            <if test="id != null and id != '' ">
+                AND ST.ID = #{id, jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </select>
+    <!--  trim是更灵活的去处多余关键字的标签-->
+    <!-- 5.2 if/trim代替set(判断参数) - 将实体类不为空的属性更新 -->
+    <update id="updateStudent_if_trim" parameterType="com.tom.entity.StudentEntity">
+        UPDATE student
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != '' ">
+                NAME = #{name},
+            </if>
+            <if test="sex != null and sex != '' ">
+                SEX = #{sex},
+            </if>
+            <if test="birthday != null ">
+                BIRTHDAY = #{birthday},
+            </if>
+            <if test="Photo != null ">
+                PHOTO = #{photo, javaType=byte[], jdbcType=BLOB, typeHandler=org.apache.ibatis.type.BlobTypeHandler},
+            </if>
+            <if test="classId != '' ">
+                CLASS_ID = #{classId},
+            </if>
+            <if test="placeId != '' ">
+                PLACE_ID = #{placeId}
+            </if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+
+<!--     7.1 foreach(循环array参数) - 作为where中in的条件 -->
+    <select id="getStudentListByClassIds_foreach_array" resultMap="resultMap_studentEntity">
+        SELECT ST.ID,
+        ST.NAME,
+        ST.SEX,
+        ST.BIRTHDAY,
+        ST.PHOTO,
+        ST.CLASS_ID,
+        ST.PLACE_ID
+        FROM student ST
+        WHERE ST.CLASS_ID IN
+        <foreach collection="array" item="classIds"  open="(" separator="," close=")">
+            #{classIds}
+        </foreach>
+    </select>
+
+
+    <!-- 7.2 foreach(循环List<String>参数) - 作为where中in的条件 -->
+    <select id="getStudentListByClassIds_foreach_list" resultMap="resultMap_studentEntity">
+        SELECT ST.ID,
+        ST.NAME,
+        ST.SEX,
+        ST.BIRTHDAY,
+        ST.PHOTO,
+        ST.CLASS_ID,
+        ST.PLACE_ID
+        FROM student ST
+        WHERE ST.CLASS_ID IN
+        <foreach collection="list" item="classIdList"  open="(" separator="," close=")">
+            #{classIdList}
+        </foreach>
+    </select>
+
+<!--    &lt;!&ndash;定义sql片段&ndash;&gt;-->
+<!--    <sql id="orderAndItem">-->
+<!--        o.order_id,o.cid,o.address,o.create_date,o.orderitem_id,i.orderitem_id,i.product_id,i.count-->
+<!--    </sql>-->
+
+<!--    <select id="findOrderAndItemsByOid" parameterType="java.lang.String" resultMap="BaseResultMap">-->
+<!--        select-->
+<!--        &lt;!&ndash;引用sql片段&ndash;&gt;-->
+<!--        <include refid="orderAndItem" />-->
+<!--        from ordertable o-->
+<!--        join orderitem i on o.orderitem_id = i.orderitem_id-->
+<!--        where o.order_id = #{orderId}-->
+<!--    </select>-->
+</mapper>

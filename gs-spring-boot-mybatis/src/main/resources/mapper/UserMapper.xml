@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tom.mapper.UserMapper">
+    <select id="queryById" resultMap="BaseReslutMap">
+        select * FROM User
+        where id in
+        <foreach collection="userids" item="userid" index="index" open="(" separator="," close=")">
+            #{userid}
+        </foreach>
+    </select>
+
+<!--    比如说我们想要进行条件查询,但是几个条件不是每次都要使用,那么我们就可以-->
+<!--    通过判断是否拼接到sql中-->
+    <select id="queryById" resultMap="BascResultMap" parameterType="entity">
+        SELECT *  from User
+        <where>
+            <if test="name!=null">
+                name like concat('%',concat(#{name},'%'))
+            </if>
+        </where>
+    </select>
+    <!--  choose(判断参数) - 按顺序将实体类 User 第一个不为空的属性作为：where条件 -->
+    <select id="getUserList_choose" resultMap="resultMap_user" parameterType="com.tom.entity.User">
+        SELECT *
+        FROM User u
+        <where>
+            <choose>
+                <when test="username !=null ">
+                    u.username LIKE CONCAT(CONCAT('%', #{username, jdbcType=VARCHAR}),'%')
+                </when >
+                <when test="sex != null and sex != '' ">
+                    AND u.sex = #{sex, jdbcType=INTEGER}
+                </when >
+                <when test="birthday != null ">
+                    AND u.birthday = #{birthday, jdbcType=DATE}
+                </when >
+                <otherwise>
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+
+</mapper>
