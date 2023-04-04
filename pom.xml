@@ -3,41 +3,17 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.tom</groupId>
     <artifactId>best-practice</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>gs-log</module>
-        <module>gs-junit/gs-maven-surefire-plugin</module>
-        <module>gs-mybatis-module/mybatis-cache-demo</module>
-        <!--<module>gs-zero-mvc</module>
-        <module>gs-js</module>
-        <module>gs-ibatis</module>
-        <module>gs-mybatis</module>
-        <module>gs-jdbc</module>
-        <module>springmvc-introduce</module>
-        <module>springmvc-helloworld</module>
-        <module>springmvc4-jpa-springsecurity</module>
-        <module>gs-annotation</module>
-        <module>gs-webix</module>
-        <module>gs-consuming-rest</module>
-        <module>springmvc-hibernate-oracle</module>
-        <module>gs-pattern</module>
-        <module>gs-transaction</module>
-        <module>gs-common-webmvc</module>
-        <module>gs-manual-webmvc</module>
-        <module>java-distribute</module>
-        <module>java-distribute-cfx</module>
-        <module>java-distribute-zookeeper</module>
-        <module>gs-xtransaction</module>-->
     </modules>
     <dependencies>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>3.5.3</version>
+            <version>3.5.13</version>
         </dependency>
     </dependencies>
     <properties>
@@ -116,7 +92,6 @@
                 <version>2.2</version>
                 <scope>provided</scope>
             </dependency>
-            <!--java.lang.ClassNotFoundException: org.springframework.ui.freemarker.FreeMarkerConfigurationFactory-->
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
@@ -127,7 +102,6 @@
                 <artifactId>freemarker</artifactId>
                 <version>2.3.28</version>
             </dependency>
-            <!-- http://mvnrepository.com/artifact/com.alibaba/fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -199,26 +173,5 @@
     </dependencyManagement>
     <build>
         <finalName>best-practise</finalName>
-       <!-- <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <port>8080</port>
-                    <path>/</path>
-                </configuration>
-            </plugin>
-        </plugins>-->
     </build>
 </project>

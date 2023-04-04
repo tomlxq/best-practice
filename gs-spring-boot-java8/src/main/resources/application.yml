@@ -5,9 +5,9 @@ logging:
 ################### DataSource Configuration ##########################
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gs-jdbc
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.238.150:3306/demo
     username: root
-    password:
+    password: root
     initialize: true
 init-db: true

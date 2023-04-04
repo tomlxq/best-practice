@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.JsonValueSerializer;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
-import jdk.internal.joptsimple.internal.Strings;
+
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.jackson.JsonObjectSerializer;
 
@@ -58,7 +58,7 @@ public class TestIfElse {
      */
     @Deprecated
     public static String determineGender(int input) {
-        String gender = Strings.EMPTY;
+        String gender = "";
         if (input == 0) {
             gender = "male";
         } else if (input == 1) {
@@ -150,7 +150,7 @@ public class TestIfElse {
      * @return
      */
     public String printUser(SecurityProperties.User user, String formatType) {
-        String result = Strings.EMPTY;
+        String result = "";
         if (formatType.equals("json")) {
             result = JSON.toJSONString(user);
         } else if (formatType.equals("plainText")) {
