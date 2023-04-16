@@ -1,0 +1,3 @@
+方式一：使用原始httpClient请求
+方式二：使用RestTemplate方法
+方式三：使用Feign进行消费

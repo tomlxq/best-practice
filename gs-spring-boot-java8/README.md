@@ -1,3 +1,14 @@
+# 异步的八种实现方式
+* 线程Thread
+* Future
+* 异步框架CompletableFuture
+* Spring注解@Async
+* Spring ApplicationEvent事件
+* 消息队列
+* 第三方异步框架，比如Hutool的ThreadUtil
+* Guava异步
+
+
 # 查看存活的类
 * Twitter的分布式自增ID算法，Snowflake
 * 最初Twitter把存储系统从MySQL迁移到Cassandra（由Facebook开发一套开源分布式NoSQL数据库系统）因为Cassandra没有顺序ID生成机制，所有开发了这样一套全局唯一ID生成服务。
