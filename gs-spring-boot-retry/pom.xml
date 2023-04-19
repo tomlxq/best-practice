@@ -46,6 +46,11 @@
             <artifactId>guava</artifactId>
             <version>31.1-jre</version>
         </dependency>
+        <dependency>
+            <groupId>ws.argo.probe</groupId>
+            <artifactId>ProbeGenerator</artifactId>
+            <version>0.3.1</version>
+        </dependency>
     </dependencies>
 
 </project>

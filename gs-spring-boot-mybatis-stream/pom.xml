@@ -57,6 +57,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ws.argo.probe</groupId>
+            <artifactId>ProbeGenerator</artifactId>
+            <version>0.3.1</version>
+        </dependency>
     </dependencies>
 
     <build>

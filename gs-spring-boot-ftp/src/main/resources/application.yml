@@ -1,0 +1,8 @@
+# ftp
+ftp:
+  host: 192.168.238.200
+  post: 22
+  username: ftpadmin
+  password: ftpadmin
+  base-path: /app/upload/images
+  image-base-url: http://192.168.238.200:8080/images

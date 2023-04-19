@@ -50,16 +50,9 @@
             <version>4.4</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.8.16</version>
-            <scope>test</scope>
+            <groupId>ws.argo.probe</groupId>
+            <artifactId>ProbeGenerator</artifactId>
+            <version>0.3.1</version>
         </dependency>
 
 

@@ -31,5 +31,10 @@
             <artifactId>fastjson</artifactId>
             <version>2.0.25</version>
         </dependency>
+        <dependency>
+            <groupId>ws.argo.probe</groupId>
+            <artifactId>ProbeGenerator</artifactId>
+            <version>0.3.1</version>
+        </dependency>
     </dependencies>
 </project>

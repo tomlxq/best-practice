@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+    <title>例子3: 自定义的html实现布局</title>
+    <link rel="stylesheet" href="/webjars/webix/3.2.0/webix.css" type="text/css">
+    <script src="/webjars/webix/3.2.0/webix.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="testA" style="width:400px; height:300px; margin:10px;">demo</div>
+<script type="text/javascript" charset="utf-8">
+    webix.ui({
+        type: "line",
+        container: "testA",
+        // ...
+    });
+</script>
+</body>
+</html>
