@@ -1,0 +1,6 @@
+
+
+server:
+  port: 8089
+printTime:
+  cron: 0/10 * * * * ?

@@ -3,6 +3,7 @@ package com.tom.service;
 import com.tom.entity.StudentEntity;
 import com.tom.mapper.StudentMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final StudentMapper studentMapper;
 
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
         entity.setClassId("20000001");
         entity.setPlaceId("70000001");
         this.studentMapper.createStudentAutoKey(entity);
-        System.out.println("新增学生ID: " + entity.getId());
+        log.info("新增学生ID: " + entity.getId());
     }
 
     @Override
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
         //entity.setPlaceId("70000001");
         List<StudentEntity> list = this.studentMapper.getList_if(entity);
         for (StudentEntity e : list) {
-            System.out.println(e.toString());
+            log.info(e.toString());
         }
     }
 
@@ -54,8 +56,10 @@ public class UserServiceImpl implements UserService {
         classIdList.add("20000002");
         List<StudentEntity> list = this.studentMapper.getStudentListByClassIds_foreach_list(classIdList);
         for (StudentEntity e : list) {
-            System.out.println(e.toString());
+            log.info(e.toString());
         }
     }
+
+
 
 }

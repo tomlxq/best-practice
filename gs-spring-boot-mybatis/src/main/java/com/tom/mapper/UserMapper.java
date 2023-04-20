@@ -2,6 +2,7 @@ package com.tom.mapper;
 
 import com.tom.entity.Entity;
 import com.tom.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Date;
 import java.util.List;
@@ -11,9 +12,10 @@ import java.util.List;
  *
  * @author TomLuo
  * @date 2023年03月18日 0:52
- */
+ */@Mapper
 public interface UserMapper {
     /**
+     * 1用来循环容器的标签forEach
      * foreach元素的属性主要有item，index，collection，open，separator，close。
      * <p>
      * item：集合中元素迭代时的别名，
@@ -31,9 +33,15 @@ public interface UserMapper {
      */
     public List<User> queryById(List<String> userids);
 
+    /**
+     * 2concat模糊查询
+     * @param name
+     * @return
+     */
     public List<User> queryById(String name);
 
     /**
+     * 3choose (when, otherwise)标签
      * choose标签是按顺序判断其内部when标签中的test条件出否成立，如果有一个成立，则 choose 结束。
      * 当 choose 中所有 when 的条件都不满则时，则执行 otherwise 中的sql。
      * 类似于Java 的 switch 语句，c
@@ -46,4 +54,7 @@ public interface UserMapper {
      * @return
      */
     public List<User> getUserList_choose(String username, Integer sex, Date birthday);
+    /**
+     * 4selectKey 标签
+     */
 }
