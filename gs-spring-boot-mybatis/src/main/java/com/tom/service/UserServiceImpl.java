@@ -1,9 +1,15 @@
 package com.tom.service;
 
+import com.tom.entity.Article;
+import com.tom.mapper.ArticleMapper;
+import org.apache.ibatis.session.SqlSessionFactory;
+import com.tom.entity.Model;
 import com.tom.entity.StudentEntity;
 import com.tom.mapper.StudentMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
+
+    private final SqlSessionFactory  sqlSessionFactory;
     private final StudentMapper studentMapper;
 
     @Override
@@ -62,4 +70,46 @@ public class UserServiceImpl implements UserService {
 
 
 
+    @Override
+    public void insertModelBatch() {
+        List<Model> list = new ArrayList<Model>();
+        SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        for (Model model : list) {
+            session.insert("insertStatement", model);
+        }
+        session.flushStatements();
+    }
+
+    @Override
+    public void insertModelBatch2() {
+
+    }
+
+    /*@Override
+    public void insertModelBatch2() {
+        SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        try {
+            ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+            Article row = new Article();
+            row.setId(100L);
+            row.setTitle("Joe");
+            row.setAuthor("Jones");
+
+
+            InsertStatementProvider<Article> insertStatement = insert(row)
+                    .into(simpleTable)
+                    .map(id).toProperty("id")
+                    .map(firstName).toProperty("firstName")
+                    .map(lastName).toProperty("lastName")
+                    .map(birthDate).toProperty("birthDate")
+                    .map(employed).toProperty("employed")
+                    .map(occupation).toProperty("occupation")
+                    .build()
+                    .render(RenderingStrategies.MYBATIS3);
+
+            int rows = mapper.insert(insertStatement);
+        } finally {
+            session.close();
+        }
+    }*/
 }

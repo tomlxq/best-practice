@@ -1,0 +1,23 @@
+mybatis:
+  type-aliases-package: com.tom.entity
+  type-handlers-package: com.tom.mapper
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+logging:
+  level:
+    root: warn
+  com:
+    tom:
+      mapper: TRACE
+server:
+  servlet:
+    context-path: mybatis
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.238.150:3306/demo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: root

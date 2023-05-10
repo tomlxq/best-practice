@@ -40,5 +40,10 @@
         </where>
     </select>
 
-
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into USER (id, name) values
+        <foreach collection="list" item="model" index="index" separator=",">
+            (#{model.id}, #{model.name})
+        </foreach>
+    </insert>
 </mapper>

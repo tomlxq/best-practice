@@ -1,0 +1,18 @@
+spring:
+  port: 9999
+  redis:
+    host: 192.168.238.150
+    port: 6379
+    password: redis
+datasource:
+  tinyid:
+    names: primary
+  primary:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.238.150:3306/demo?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+tinyid:
+  server:
+    localhost: 9999
+  token: 0f673adf80504e2eaa552f5d791b644c

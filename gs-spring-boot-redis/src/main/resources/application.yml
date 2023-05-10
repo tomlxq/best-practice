@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: dev
+  redis:
+    host: 192.168.238.150
+    port: 6379
+    password: redis

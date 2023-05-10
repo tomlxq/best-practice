@@ -1,0 +1,8 @@
+# 数据源
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.238.150:3306/demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
