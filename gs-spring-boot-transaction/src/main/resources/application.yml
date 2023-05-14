@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          url: jdbc:mysql://192.168.238.150/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone =Asia/Shanghai
+          username: root
+          password: root
+        slave_1:
+          url: jdbc:mysql://192.168.238.150/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone =Asia/Shanghai
+          username: root
+          password: root
+      hikari:
+        max-lifetime: 1800000
+        connection-timeout: 5000
+        idle-timeout: 3600000
+        max-pool-size: 12
+        min-idle: 4
+        connection-test-query: /**ping*/
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  # 支持统配符 * 或者 ; 分割
+  typeEnumsPackage: com.tom.*.enums
