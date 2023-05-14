@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- hibernate DTD文件的声明 -->
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 映射文件的根节点 -->
+<hibernate-mapping package="com.example">
+    <!--
+    对象关系映射的开始：class元素表示类和数据库中的表的映射关系。
+    name属性指定持久化类（或者接口）的Java全限定名；
+    table属性指定要映射的对应的数据库表名
+     -->
+    <class name="com.example.bean.Student" table="student">
+        <!--
+   持久化类对象的对象标识符(OID)和表的主键的映射关联：
+   name属性指定类中作为OID的属性名；
+   column属性表中主键字段的名字；
+   type属性指定Hibernate的映射类型
+         -->
+        <id name="id" column="student_id" type="int">
+            <!-- 指定对象标识符生成器：class属性指定生成器的类别名 -->
+            <generator class="increment"/>
+        </id>
+        <!--
+普通属性的映射：
+name属性：属性的名字,以小写字母开头；
+column属性：对应的数据库字段名
+type属性：指定Hibernate的映射类型
+-->
+        <property name="name" column="student_name" type="string"/>
+        <property name="status" column="student_status" type="string"/>
+        <property name="age" column="age" type="int"/>
+    </class>
+</hibernate-mapping>
