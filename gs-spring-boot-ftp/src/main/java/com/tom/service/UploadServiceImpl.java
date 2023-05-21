@@ -1,5 +1,6 @@
 package com.tom.service;
 
+import com.tom.entity.FtpConfig;
 import com.tom.entity.UploadFileDto;
 import com.tom.entity.UploadVo;
 import com.tom.tool.UploadFileUtils;

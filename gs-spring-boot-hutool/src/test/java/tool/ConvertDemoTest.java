@@ -1,17 +1,8 @@
 package tool;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.extra.mail.MailAccount;
-import cn.hutool.extra.mail.MailUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 类型转换
@@ -22,12 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @Slf4j
 class ConvertDemoTest {
-    ConvertDemo convertDemo = null;
 
-    @BeforeEach
-    void setUp() {
-        convertDemo = new ConvertDemo();
-    }
 
     @Test
     void name() {

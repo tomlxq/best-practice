@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tom.config.RedisConfig;
+import com.tom.example1.config.RedisConfig;
 import com.tom.model.Student;
 import com.tom.repo.StudentRepository;
 import org.junit.AfterClass;

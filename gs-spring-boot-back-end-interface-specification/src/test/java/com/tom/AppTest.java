@@ -1,6 +1,7 @@
 package com.tom;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for simple App.

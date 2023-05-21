@@ -1,8 +1,12 @@
 package com.tom.logging.log4j2;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.junit.Test;
+
+import com.tom.example1.domain.User;
+import com.tom.example1.mapper.UserMapper;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 /**
  * 功能描述
@@ -10,24 +14,24 @@ import org.junit.Test;
  * @author TomLuo
  * @date 2020/12/27
  */
+@SpringBootTest
 public class Log4j2ExampleTest {
-
-    private static final Logger logger = LogManager.getLogger(Log4j2Example.class);
+@Autowired
+UserMapper userMapper;
+    @Test
+    public void test1() {
+        //...
+        User user = userMapper.selectById(1L);
+        Assert.notNull(user, "用户不存在.");
+        //...
+    }
 
     @Test
-    public void testName() {
-
-        logger.debug("Debug log message");
-        logger.info("Info log message");
-        logger.error("Error log message");
-        logger.warn("Warn log message");
-        logger.fatal("Fatal log message");
-        logger.trace("Trace log message");
-        try {
-            throw new RuntimeException("there is a error");
-        } catch (Exception e) {
-            logger.error("Error log message", e);
+    public void test2() {
+        // 另一种写法
+        User user = userMapper.selectById(1L);
+        if (user == null) {
+            throw new IllegalArgumentException("用户不存在.");
         }
-        System.out.printf("test");
     }
 }
