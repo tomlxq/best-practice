@@ -1,6 +1,7 @@
 package com.tom;
 
 
+import com.tom.example2.SpringRedisApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Set;
  * @author TomLuo
  * @date 2023年04月30日 6:44
  */
-@SpringBootTest
+@SpringBootTest(classes = SpringRedisApplication.class)
 @Slf4j
 public class RankingTest {
     private final String KEY_RANKING = "ranking";

@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
 
-import com.tom.SpringRedisApplication;
+import com.tom.example2.SpringRedisApplication;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

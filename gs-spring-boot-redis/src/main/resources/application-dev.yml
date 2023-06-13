@@ -6,3 +6,8 @@ spring:
     url: jdbc:mysql://192.168.238.150:3306/demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 192.168.238.150
+    port: 6379
+    password: redis
+    database: 0

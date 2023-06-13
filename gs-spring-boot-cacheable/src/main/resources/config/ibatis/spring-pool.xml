@@ -41,7 +41,7 @@
     </tx:advice>
     <!--  配置参与事务的类 -->
     <aop:config>
-        <aop:pointcut id="allServiceMethod" expression="execution(* com.example.service.*.*(..))"/>
+        <aop:pointcut id="allServiceMethod" expression="execution(* com.example.demo1.service.*.*(..))"/>
         <aop:advisor pointcut-ref="allServiceMethod" advice-ref="transAdvice"/>
     </aop:config>
     <!-- Spring bean configuration. Tell Spring to bounce off BoneCP -->

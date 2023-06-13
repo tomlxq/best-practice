@@ -1,6 +1,8 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * A142环形链表II
@@ -47,7 +49,7 @@ public class A142环形链表II {
         return null;
     }
 
-    @org.junit.Test
+    @Test
     public void name() {
         //输入：head = [3,2,0,-4], pos = 1
         //输出：true

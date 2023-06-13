@@ -1,6 +1,6 @@
 package com.tom.example1.config;
 
-import com.tom.service.RedisService;
+import com.tom.example2.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

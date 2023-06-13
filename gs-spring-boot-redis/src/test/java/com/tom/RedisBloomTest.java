@@ -1,6 +1,8 @@
 package com.tom;
 
 
+import com.tom.example2.RedisBloom;
+import com.tom.example2.SpringRedisApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import java.util.List;
  * @author TomLuo
  * @date 2023年05月07日 6:02
  */
-@SpringBootTest
+@SpringBootTest(classes = SpringRedisApplication.class)
 @Slf4j
 public class RedisBloomTest {
 

@@ -1,8 +1,8 @@
 package com.tom.example1.config;
 
-import com.tom.model.UserTokenDTO;
+import com.tom.example2.model.UserTokenDTO;
 import com.tom.lib.JWTUtil;
-import com.tom.service.RedisService;
+import com.tom.example2.service.RedisService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

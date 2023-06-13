@@ -1,0 +1,2 @@
+# 注册 ApplicationContextInitializer
+org.springframework.context.ApplicationContextInitializer=com.example.bootstrap.MyApplicationContextInitializer

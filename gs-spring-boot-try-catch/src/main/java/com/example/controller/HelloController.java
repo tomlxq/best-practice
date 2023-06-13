@@ -2,13 +2,12 @@ package com.example.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.entity.ResultCode;
-import com.example.service.ProductInfoService;
+import com.example.demo1.service.ProductInfoService;
 import com.example.config.APIException;
 import com.example.config.NotControllerResponseAdvice;
 import com.example.entity.BusinessException;
 import com.example.entity.ProductInfo;
 import com.example.entity.ProductInfoVo;
-import com.example.entity.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

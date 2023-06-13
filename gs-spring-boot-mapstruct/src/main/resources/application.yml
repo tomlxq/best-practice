@@ -1,0 +1,6 @@
+logging:
+    level:
+        com:
+            example: DEBUG
+        org:
+            springframework: ERROR

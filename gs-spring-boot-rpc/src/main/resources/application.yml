@@ -1,0 +1,19 @@
+logging:
+    level:
+        com:
+            example: DEBUG
+        org:
+            springframework: DEBUG
+mybatis:
+    mapperLocations: classpath*:**/mappers/*.xml
+    typeAliasesPackage: com.example.domain
+spring:
+    datasource:
+        data: data.sql
+        driver-class-name: com.mysql.jdbc.Driver
+        initialize: true
+        password: ''
+        platform: mysql
+        schema: schema.sql
+        url: jdbc:mysql://localhost:3306/gs-mybatis?useUnicode=true&characterEncoding=UTF-8
+        username: root

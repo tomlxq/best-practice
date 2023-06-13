@@ -1,7 +1,7 @@
-import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * A141环形链表
@@ -27,7 +27,7 @@ public class A141环形链表 {
         return false;
     }
 
-    @org.junit.Test
+    @Test
     public void name() {
         //输入：head = [3,2,0,-4], pos = 1
         //输出：true

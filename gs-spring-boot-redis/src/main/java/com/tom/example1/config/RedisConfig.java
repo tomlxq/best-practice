@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+
 
 /**
  * xxx
@@ -20,10 +20,10 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  */
 
 
-@EnableRedisHttpSession
+
 @Configuration
 @ComponentScan("com.tom")
-@EnableRedisRepositories(basePackages = "com.tom.repo")
+@EnableRedisRepositories(basePackages = "com.tom.example2.repo")
 public class RedisConfig {
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
@@ -56,27 +56,27 @@ public class RedisConfig {
         return template;
     }
 
-  /*  @Bean
-    MessageListenerAdapter messageListener() {
-        return new MessageListenerAdapter(new RedisMessageSubscriber());
-    }
-
-    @Bean
-    RedisMessageListenerContainer redisContainer() {
-        final RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(jedisConnectionFactory());
-        container.addMessageListener(messageListener(), topic());
-        return container;
-    }
-
-    @Bean
-    MessagePublisher redisPublisher() {
-        return new RedisMessagePublisher(redisTemplate(), topic());
-    }
-
-    @Bean
-    ChannelTopic topic() {
-        return new ChannelTopic("pubsub:queue");
-    }*/
+//    @Bean
+//    MessageListenerAdapter messageListener() {
+//        return new MessageListenerAdapter(new RedisMessageSubscriber());
+//    }
+//
+//    @Bean
+//    RedisMessageListenerContainer redisContainer() {
+//        final RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+//        container.setConnectionFactory(jedisConnectionFactory());
+//        container.addMessageListener(messageListener(), topic());
+//        return container;
+//    }
+//
+//    @Bean
+//    MessagePublisher redisPublisher() {
+//        return new RedisMessagePublisher(redisTemplate(), topic());
+//    }
+//
+//    @Bean
+//    ChannelTopic topic() {
+//        return new ChannelTopic("pubsub:queue");
+//    }
 
 }
