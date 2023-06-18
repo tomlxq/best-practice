@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: default
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.238.150:3306/demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+#配置日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# 异步线程配置 自定义使用参数
+async:
+  executor:
+    thread:
+      core_pool_size:  10  # 配置核心线程数 默认8个 核数*2+2
+      max_pool_size:  100   # 配置最大线程数
+      queue_capacity:  99988  # 配置队列大小
+      keep_alive_seconds:  20  #设置线程空闲等待时间秒s
+      name:
+        prefix: async-thread-  # 配置线程池中的线程的名称前缀

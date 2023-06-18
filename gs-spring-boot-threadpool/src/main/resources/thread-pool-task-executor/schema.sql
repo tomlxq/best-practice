@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS tb_student;
+
+CREATE TABLE tb_student
+(
+    id    BIGINT(20)  NOT NULL COMMENT '主键ID',
+    student_name  VARCHAR(30) NULL DEFAULT NULL COMMENT '姓名',
+    age   INT(11)     NULL DEFAULT NULL COMMENT '年龄',
+    addr VARCHAR(50) NULL DEFAULT NULL COMMENT '地址',
+    phone VARCHAR(50) NULL DEFAULT NULL COMMENT '邮箱',
+    PRIMARY KEY (id)
+);
