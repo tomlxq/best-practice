@@ -41,13 +41,6 @@
             <artifactId>p6spy</artifactId>
             <version>3.9.1</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.5.2</version>
-        </dependency>-->
-
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -74,6 +67,13 @@
             <artifactId>ProbeGenerator</artifactId>
             <version>0.3.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.16</version>
+        </dependency>
+
 
     </dependencies>
 </project>

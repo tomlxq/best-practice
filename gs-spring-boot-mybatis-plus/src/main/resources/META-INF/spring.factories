@@ -1,2 +1,2 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.tom.demo.config.SafetyEncryptProcessor
+  com.tom.demo.guide.config.SafetyEncryptProcessor
